@@ -27,9 +27,6 @@ class Word(models.Model):
     # the part of speech that this word is
     part_of_speech  = models.ForeignKey('PartOfSpeech')
     
-    # lesson number in which word was taught
-    lesson          = models.IntegerField(null=True, blank=True)
-    
     # whether a word has been verified by an administrator
     # this will allow words that have been crowdsourced to be checked for 
     # spelling, etc. before being used in lessons and exercises
@@ -44,9 +41,9 @@ class Word(models.Model):
 
 # Finite choice of letters types
 LETTER_TYPES = (
-    ('vw', 'Vowel' ),
-    ('cn', 'Consonant'),
-    ('cb', 'Combination'),    
+    ('vow', 'Vowel' ),
+    ('con', 'Consonant'),
+    ('cmb', 'Combination'),    
 )
 
 # A Tamil letter
@@ -55,7 +52,7 @@ class Letter(models.Model):
     english     = models.CharField(max_length=50)   # English equivalent (Unicode/Anjal)
     
     # whether the letter is a vowel, consonant or combination
-    type        = models.CharField(max_length=2, choices=LETTER_TYPES)
+    type        = models.CharField(max_length=3, choices=LETTER_TYPES)
     
     # audio file (preferably .ogg format) with pronunciation     
     audio_file  = models.FileField(upload_to='/media/letters/')
@@ -63,3 +60,23 @@ class Letter(models.Model):
     # string representation of the letter: display Tamil
     def __unicode__(self):
         return  u'%s' % (self.tamil)
+    
+
+# Finite choice of rule types
+RULE_TYPES = (
+    ('al', 'Alphabet'),
+    ('gr', 'Grammar' ),
+    ('sp', 'Spoken Tamil'),    
+)
+
+# An alphabet or grammar rule 
+class Rule(models.Model):
+    
+    # the name of the rule
+    title       = models.CharField(max_length=30)
+    
+    # whether the rule is an alphabet, grammar or spoken Tamil rule
+    type        = models.CharField(max_length=2, choices=LETTER_TYPES)    
+    
+    # a description of the rule
+    description = models.TextField()
