@@ -14,6 +14,9 @@ class PartOfSpeech(models.Model):
     def __unicode__(self):
         return  u'%s / %s:\n%s' % (self.tamil, self.english, self.description)
     
+    class Meta:
+        verbose_name_plural = "Parts of speech"
+    
 
 # A Tamil word
 class Word(models.Model):
@@ -80,3 +83,4 @@ class Rule(models.Model):
     
     # a description of the rule
     description = models.TextField()
+    
