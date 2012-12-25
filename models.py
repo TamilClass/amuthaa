@@ -10,9 +10,9 @@ class PartOfSpeech(models.Model):
     example         = models.TextField(null=True, blank=True)
     description     = models.TextField(null=True, blank=True)
     
-    # string representation of word: display Tamil
+    # string representation of part of speech: display Tamil
     def __unicode__(self):
-        return  u'%s / %s:\n%s' % (self.tamil, self.english, self.description)
+        return  u'%s / %s' % (self.english, self.tamil)
     
     class Meta:
         verbose_name_plural = "Parts of speech"
@@ -40,13 +40,17 @@ class Word(models.Model):
     
     # string representation of word: display Tamil
     def __unicode__(self):
-        return  u'%s' % (self.tamil)
+        return  u'%s / %s' % (self.tamil, self.english)
+
 
 # Finite choice of letters types
 LETTER_TYPES = (
-    ('vow', 'Vowel' ),
-    ('con', 'Consonant'),
-    ('cmb', 'Combination'),    
+    ('sv', 'Short Vowel' ),
+    ('lv', 'Long Vowel'),
+    ('hc', 'Hard Consonant'),    
+    ('sc', 'Soft Consonant'),    
+    ('mc', 'Medium Consonant'),    
+    ('cb', 'Combination'),    
 )
 
 # A Tamil letter
@@ -55,14 +59,14 @@ class Letter(models.Model):
     english     = models.CharField(max_length=50)   # English equivalent (Unicode/Anjal)
     
     # whether the letter is a vowel, consonant or combination
-    type        = models.CharField(max_length=3, choices=LETTER_TYPES)
+    type        = models.CharField(max_length=2, choices=LETTER_TYPES)
     
     # audio file (preferably .ogg format) with pronunciation     
     audio_file  = models.FileField(null=True, blank=True, upload_to='/media/letters/')
     
     # string representation of the letter: display Tamil
     def __unicode__(self):
-        return  u'%s' % (self.tamil)
+        return  u'%s / %s' % (self.english, self.tamil)
     
 
 # Finite choice of rule types
