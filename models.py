@@ -35,7 +35,7 @@ class Word(models.Model):
     # spelling, etc. before being used in lessons and exercises
     verified        = models.BooleanField(blank=True, default=False)
 
-    audio_file      = models.FileField(upload_to='/media/words/')
+    audio_file      = models.FileField(null=True, blank=True, upload_to='/media/words/')
 
     
     # string representation of word: display Tamil
@@ -58,7 +58,7 @@ class Letter(models.Model):
     type        = models.CharField(max_length=3, choices=LETTER_TYPES)
     
     # audio file (preferably .ogg format) with pronunciation     
-    audio_file  = models.FileField(upload_to='/media/letters/')
+    audio_file  = models.FileField(null=True, blank=True, upload_to='/media/letters/')
     
     # string representation of the letter: display Tamil
     def __unicode__(self):
