@@ -1,7 +1,7 @@
 import csv
 from apps.amuthaa.models import Letter
 
-# initiative Django environment settings
+# initiate Django environment settings
 from django.core.management import setup_environ
 import learntamil.settings.stage
 setup_environ(learntamil.settings.stage)
