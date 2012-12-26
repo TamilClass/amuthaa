@@ -17,7 +17,7 @@ def import_letter(letter_tamil, letter_english, letter_type):
     
     l = Letter(tamil=letter_tamil, english=letter_english, type=letter_type)
     l.save()
-    print Letter.objects.all()
+    print " Added letter %s" %(l)
 
 
 def main():
@@ -26,6 +26,10 @@ def main():
 
     for letter_tamil, letter_english, letter_type in reader:
         import_letter(letter_tamil, letter_english, letter_type)
+        
+    print "=================="
+    print Letter.objects.all()
+    print "=================="
 
 if __name__ == "__main__":
     main()
