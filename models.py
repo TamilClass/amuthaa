@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/python
+
 from django.db import models
 
 # Create your models here.
@@ -17,6 +20,58 @@ class PartOfSpeech(models.Model):
     class Meta:
         verbose_name_plural = "Parts of speech"
     
+
+# Finite choice of letters types
+VERB_TENSE_TYPES = (
+    ('pres', 'Present Tense'),    
+    ('futr', 'Future Tense'),    
+    ('past', 'Past Tense'),    
+)
+
+# The different verb stem transformations under past, present and future tenses
+# This would serve as a foreign key to the VerbClass model so that each VerbClass
+# can match itself up with a particular verb stem
+class VerbStem(models.Model):
+    
+    # the actual verb stem. E.g. for செய் would be வ் in the past tense 
+    stem                = models.CharField(max_length=10)
+    
+    # in the present tense, there are two possible stems: (க்)கிற் & (க்)க்கிற்
+    # the first of those would be the default
+    # this field indicates whether the default is being used
+    default             = models.BooleanField(default=True)
+    
+    # whether the stem should remove the last character
+    remove_last_char    = models.BooleanField(default=False)
+
+
+class VerbRoot(models.Model):
+    name                = models.CharField(max_length=30)
+    
+    verb_class          = models.ForeignKey('VerbClass')
+    
+
+# Verb class
+class VerbClass(models.Model):
+    category            = models.IntegerField
+    subcategory         = models.CharField(max_length=1, null=True, blank=True, default="")
+
+    # pedagogical information
+    example             = models.TextField(null=True, blank=True)
+    description         = models.TextField(null=True, blank=True)
+    
+    # identification pattern: last letter
+    ending_letters      = models.ManyToManyField('Letter')
+    
+    # identification pattern: regex pattern matching formula  
+    ending_pattern      = models.CharField(max_length=10, null=True, blank=True)
+    
+    # present tense indicator stem. There are two valid stems for all verbs
+    present_stem        = models.CharField(max_length=10)
+    present_stem_alt    = models.CharField(max_length=10)   
+    
+    #
+   
 
 # A Tamil word
 class Word(models.Model):
