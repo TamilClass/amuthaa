@@ -84,6 +84,46 @@ class Ezhuthu:
         # If we've gotten this far, everything seems to be alright
         return True
 
+
+
+    ## Getter methods for aytham, vowels, consonants and combinations
+
+    @staticmethod
+    def get_aytham():
+        """ Returns a single unicode letter - aytham """
+        
+        return Ezhuthu.AYTHAM
+
+    @staticmethod
+    def get_vowels():
+        """ Returns a tuple of all the vowels """
+        
+        # get keys from VOWEL_TO_ENDING_MAP and convert to tuple
+        return tuple(Ezhuthu.VOWEL_TO_ENDING_MAP.keys())
+    
+    @staticmethod
+    def get_consonants():
+        """ Returns a tuple of all the consonants """
+    
+        # merge all sub-iterables in CONSONANTS into one tuple 
+        return  tuple(consonant for consonant_group in Ezhuthu.CONSONANTS.values() for consonant in consonant_group)
+    
+    @staticmethod
+    def get_letter_type(letter = u''):
+        """ Returns the letter type: Vowel, Consonant or Combination """
+
+        # ensure that the letter is a valid single Tamil unicode grapheme 
+        Ezhuthu.validate_letter(letter)
+        
+        if Ezhuthu.is_vowel(letter):
+            return 'VOWEL'
+        elif Ezhuthu.is_consonant(letter):
+            return 'CONSONANT'
+        elif Ezhuthu.is_combination(letter):
+            return 'COMBINATION'
+        else:
+            raise Exception("Unknown error. Letter %s is coming up as neither a vowel, consonant or combination" %letter)
+
     @staticmethod
     def is_aytham(letter = u''):
         """
@@ -94,6 +134,8 @@ class Ezhuthu:
         
         return letter == Ezhuthu.AYTHAM
     
+    
+    ## Boolean methods to check whether a given letter is aytham, a vowel, a consonant or a combination
     
     @staticmethod
     def is_vowel(letter = u''):
@@ -129,36 +171,6 @@ class Ezhuthu:
         # a letter is a combination if it has exactly two characters, the first of which is in the 'அ' column, 
         # and the second of which is a combination ending ( ே,  ி, etc.)
         return (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ')) and (len(letter)==1 or (len(letter)==2 and letter[1] in Ezhuthu.COMBINATION_ENDINGS))
-
-    @staticmethod
-    def get_vowels():
-        """ Returns a tuple of all the vowels """
-        
-        # get keys from VOWEL_TO_ENDING_MAP and convert to tuple
-        return tuple(Ezhuthu.VOWEL_TO_ENDING_MAP.keys())
-    
-    @staticmethod
-    def get_consonants():
-        """ Returns a tuple of all the consonants """
-    
-        # merge all sub-iterables in CONSONANTS into one tuple 
-        return  tuple(consonant for consonant_group in Ezhuthu.CONSONANTS.values() for consonant in consonant_group)
-    
-    @staticmethod
-    def get_letter_type(letter = u''):
-        """ Returns the letter type: Vowel, Consonant or Combination """
-
-        # ensure that the letter is a valid single Tamil unicode grapheme 
-        Ezhuthu.validate_letter(letter)
-        
-        if Ezhuthu.is_vowel(letter):
-            return 'VOWEL'
-        elif Ezhuthu.is_consonant(letter):
-            return 'CONSONANT'
-        elif Ezhuthu.is_combination(letter):
-            return 'COMBINATION'
-        else:
-            raise Exception("Unknown error. Letter %s is coming up as neither a vowel, consonant or combination" %letter)
 
 
     @staticmethod
