@@ -17,6 +17,7 @@ class Chol:
     
     @staticmethod
     def get_letters(word = ""):
+        #TODO: Implement this
         pass
     
     
