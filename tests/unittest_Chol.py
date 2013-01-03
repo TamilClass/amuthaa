@@ -6,25 +6,25 @@ import unittest
 
 # import Ezhuthu class
 try:
-    import learntamil.apps.amuthaa.lib.Ezhuthu
+    from learntamil.apps.amuthaa.lib.Ezhuthu import Ezhuthu
 except ImportError:
     import sys
     from os.path import join, abspath, dirname
     parentpath = abspath(join(dirname(__file__), '..'))
     srcpath = join(parentpath, 'lib')
     sys.path.append(srcpath)
-    import Ezhuthu
+    from Ezhuthu import Ezhuthu
     
 # import Chol class
 try:
-    import learntamil.apps.amuthaa.lib.Chol
+    from learntamil.apps.amuthaa.lib.Chol import Chol
 except ImportError:
     import sys
     from os.path import join, abspath, dirname
     parentpath = abspath(join(dirname(__file__), '..'))
     srcpath = join(parentpath, 'lib')
     sys.path.append(srcpath)
-    import Chol
+    from Chol import Chol
     
 class CholTest(unittest.TestCase):
     """

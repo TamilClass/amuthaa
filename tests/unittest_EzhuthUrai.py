@@ -6,36 +6,36 @@ import unittest
 
 # import Ezhuthu class
 try:
-    import learntamil.apps.amuthaa.lib.Ezhuthu
+    from learntamil.apps.amuthaa.lib.Ezhuthu import Ezhuthu
 except ImportError:
     import sys
     from os.path import join, abspath, dirname
     parentpath = abspath(join(dirname(__file__), '..'))
     srcpath = join(parentpath, 'lib')
     sys.path.append(srcpath)
-    import Ezhuthu
+    from Ezhuthu import Ezhuthu
     
 # import Chol class
 try:
-    import learntamil.apps.amuthaa.lib.Chol
+    from learntamil.apps.amuthaa.lib.Chol import Chol
 except ImportError:
     import sys
     from os.path import join, abspath, dirname
     parentpath = abspath(join(dirname(__file__), '..'))
     srcpath = join(parentpath, 'lib')
     sys.path.append(srcpath)
-    import Chol
+    from Chol import Chol
 
 # import EzhuthUrai class
 try:
-    import learntamil.apps.amuthaa.lib.EzhuthUrai
+    from learntamil.apps.amuthaa.lib.EzhuthUrai import EzhuthUrai
 except ImportError:
     import sys
     from os.path import join, abspath, dirname
     parentpath = abspath(join(dirname(__file__), '..'))
     srcpath = join(parentpath, 'lib')
     sys.path.append(srcpath)
-    import EzhuthUrai    
+    from EzhuthUrai import EzhuthUrai    
     
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
@@ -100,4 +100,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
