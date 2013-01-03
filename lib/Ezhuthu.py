@@ -119,8 +119,6 @@ class Ezhuthu:
         """ 
         Check whether a letter is a combination or not
         """
-        # This will work if the letters are assumed to be Tamil and not AYTHAM
-        # TODO: Come up with a better solution
 
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
@@ -363,7 +361,7 @@ class Ezhuthu:
         """
         Returns a dictionary of combinations for a particular vowel, mapped by consonant
         """
-        
+        #TODO: Implement thi
         
         
     @staticmethod
