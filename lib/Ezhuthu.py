@@ -55,7 +55,7 @@ class Ezhuthu:
     def get_script_name(letter = u''):
         """ Returns the name of the script that the unicode character is encoded in """
         
-        return unicodedata.name(letter).split()[0]
+        return unicodedata.name(letter[0]).split()[0]
 
     
     @staticmethod
