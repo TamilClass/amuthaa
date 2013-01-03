@@ -138,11 +138,68 @@ class EzhuthuTest(unittest.TestCase):
     """
     
     def setUp(self):
-        self.letter = Ezhuthu()
+        pass
     
     def tearDown(self):
-        self.letter = None
+        pass
     
+    
+    ## Test is_aytham() on aytham, vowels, consonants and combinations
+    
+    def testIsAytham_Aytham(self):
+        """is_aytham should return True for aytham"""
+        
+        print "Testing Ezhuthu.is_aytham() with aytham - expecting True", 
+        
+        self.assertTrue(Ezhuthu.is_aytham(u'ஃ'))
+            
+        print ".... pass"
+    
+    def testIsAytham_Vowels(self):
+        """is_aytham should return False for all vowels"""
+        
+        print "Testing Ezhuthu.is_aytham() with vowels - expecting True", 
+        
+        for vowel in Ezhuthu.get_vowels():
+            
+            self.assertFalse(Ezhuthu.is_aytham(vowel))
+            
+        print ".... pass"
+    
+    def testIsAytham_Consonants(self):
+        """is_aytham should return False for all consonants"""
+        
+        print "Testing Ezhuthu.is_aytham() with consonants - expecting False",
+        
+        for consonant in Ezhuthu.get_consonants():
+            
+            self.assertFalse(Ezhuthu.is_aytham(consonant))
+
+        print ".... pass"
+        
+    def testIsAytham_Combinations(self):
+        """is_aytham should return False for all combinations"""
+        
+        print "Testing Ezhuthu.is_aytham() with combinations - expecting False",
+        
+        for combination in COMBINATIONS.values():
+            
+            self.assertFalse(Ezhuthu.is_aytham(combination))
+
+        print ".... pass"
+        
+
+    ## Test is_vowel() with aytham, vowels, consonants and combinations 
+    
+    def testIsVowel_Aytham(self):
+        """is_vowel should return True for aytham"""
+        
+        print "Testing Ezhuthu.is_vowel() with aytham - expecting False", 
+        
+        self.assertFalse(Ezhuthu.is_vowel(Ezhuthu.get_aytham()))
+            
+        print ".... pass"    
+        
     def testIsVowel_Vowels(self):
         """is_vowel should return True for all vowels"""
         
@@ -155,7 +212,7 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass"
 
     def testIsVowel_Consonants(self):
-        """is_vowel should return False on all consonants"""
+        """is_vowel should return False for all consonants"""
         
         print "Testing Ezhuthu.is_vowel() with consonants - expecting False",
         
@@ -166,7 +223,7 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass"
         
     def testIsVowel_Combinations(self):
-        """is_vowel should return False on all combinations"""
+        """is_vowel should return False for all combinations"""
         
         print "Testing Ezhuthu.is_vowel() with combinations - expecting False",
         
@@ -175,7 +232,19 @@ class EzhuthuTest(unittest.TestCase):
             self.assertFalse(Ezhuthu.is_vowel(combination))
 
         print ".... pass"
+        
 
+    ## Test is_consonant() with aytham, vowels, consonants and combinations 
+    
+    def testIsConsonant_Aytham(self):
+        """is_consonant should return True for aytham"""
+        
+        print "Testing Ezhuthu.is_consonant() with aytham - expecting False", 
+        
+        self.assertFalse(Ezhuthu.is_consonant(Ezhuthu.get_aytham()))
+            
+        print ".... pass"    
+    
     def testIsConsonant_Vowels(self):
         """is_consonant should return False for all vowels"""
         
@@ -188,7 +257,7 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass "
 
     def testIsConsonant_Consonants(self):
-        """is_consonant should return True on all consonants"""
+        """is_consonant should return True for all consonants"""
         
         print "Testing Ezhuthu.is_consonant() with consonants - expecting True",
         
@@ -199,7 +268,7 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass"
         
     def testIsConsonant_Combinations(self):
-        """is_consonant should return False on all combinations"""
+        """is_consonant should return False for all combinations"""
         
         print "Testing Ezhuthu.is_consonant() with combinations - expecting False",
         
@@ -209,6 +278,19 @@ class EzhuthuTest(unittest.TestCase):
 
         print ".... pass"    
 
+        
+
+    ## Test is_combination() with aytham, vowels, consonants and combinations 
+    
+    def testIsCombination_Aytham(self):
+        """is_combination should return True for aytham"""
+        
+        print "Testing Ezhuthu.is_combination() with aytham - expecting False", 
+        
+        self.assertFalse(Ezhuthu.is_combination(Ezhuthu.get_aytham()))
+            
+        print ".... pass"    
+    
     def testIsCombination_Vowels(self):
         """is_combination should return False for all vowels"""
         
@@ -221,7 +303,7 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass "
 
     def testIsCombination_Consonants(self):
-        """is_combination should return False on all consonants"""
+        """is_combination should return False for all consonants"""
         
         print "Testing Ezhuthu.is_combination() with consonants - expecting True",
         
@@ -232,7 +314,7 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass"
         
     def testIsCombination_Combinations(self):
-        """is_combination should return True on all combinations"""
+        """is_combination should return True for all combinations"""
         
         print "Testing Ezhuthu.is_combination() with combinations - expecting False",
         
