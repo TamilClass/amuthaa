@@ -3,6 +3,7 @@
 
 
 import unittest
+import logging
 
 # import Ezhuthu class
 try:
@@ -14,6 +15,8 @@ except ImportError:
     srcpath = join(parentpath, 'lib')
     sys.path.append(srcpath)
     from Ezhuthu import Ezhuthu
+    
+logging.basicConfig(level=logging.DEBUG)    
 
 # a tuple dictionary that matches a consonant, vowel tuple to its combination
 COMBINATIONS = {
@@ -129,26 +132,6 @@ COMBINATIONS = {
                 }
 
 
-print "Testing consonants..."
-print Ezhuthu.is_consonant(u'அ')
-print Ezhuthu.is_consonant(u'ஆ')
-print Ezhuthu.is_consonant(u'க்')
-print Ezhuthu.is_consonant(u'ங்')
-print Ezhuthu.is_consonant(u'ய்')
-print Ezhuthu.is_consonant(u'ஃ')
-print Ezhuthu.is_consonant(u'க')
-print Ezhuthu.is_consonant(u'k')
-
-print "Testing nedils..."
-print Ezhuthu.is_nedil(u'அ')
-print Ezhuthu.is_nedil(u'ஆ')
-print Ezhuthu.is_nedil(u'க்')
-print Ezhuthu.is_nedil(u'ங்')
-print Ezhuthu.is_nedil(u'ய்')
-print Ezhuthu.is_nedil(u'ஃ')
-print Ezhuthu.is_nedil(u'க')
-print Ezhuthu.is_nedil(u'k')
-
 class EzhuthuTest(unittest.TestCase):
     """
     A test class for the Ezhuthu module
@@ -158,32 +141,107 @@ class EzhuthuTest(unittest.TestCase):
         self.letter = Ezhuthu()
     
     def tearDown(self):
-        self.letter.dispose()
         self.letter = None
     
-    def testIsVowelWithVowels(self):
+    def testIsVowel_Vowels(self):
         """is_vowel should return True for all vowels"""
         
-        for vowel in Ezhuthu.VOWELS:
+        print "Testing Ezhuthu.is_vowel() with vowels - expecting True", 
+        
+        for vowel in Ezhuthu.get_vowels():
             
-            self.failUnless(Ezhuthu.is_vowel(vowel))
+            self.assertTrue(Ezhuthu.is_vowel(vowel))
+            
+        print ".... pass"
 
-    def testIsVowelWithConsonants(self):
+    def testIsVowel_Consonants(self):
         """is_vowel should return False on all consonants"""
         
-        for consonant in Ezhuthu.CONSONANTS:
+        print "Testing Ezhuthu.is_vowel() with consonants - expecting False",
+        
+        for consonant in Ezhuthu.get_consonants():
             
-            self.failIf(Ezhuthu.is_vowel(consonant))
+            self.assertFalse(Ezhuthu.is_vowel(consonant))
 
+        print ".... pass"
+        
+    def testIsVowel_Combinations(self):
+        """is_vowel should return False on all combinations"""
+        
+        print "Testing Ezhuthu.is_vowel() with combinations - expecting False",
+        
+        for combination in COMBINATIONS.values():
             
+            self.assertFalse(Ezhuthu.is_vowel(combination))
+
+        print ".... pass"
+
+    def testIsConsonant_Vowels(self):
+        """is_consonant should return False for all vowels"""
         
+        print "Testing Ezhuthu.is_consonant() with vowels - expecting False", 
         
-        self.letter = Ezhuthu(u'அ')
-        self.failIf(self.letter.is_vowel())
+        for vowel in Ezhuthu.get_vowels():
+            
+            self.assertFalse(Ezhuthu.is_consonant(vowel))
+            
+        print ".... pass "
+
+    def testIsConsonant_Consonants(self):
+        """is_consonant should return True on all consonants"""
         
-        self.letter = Ezhuthu(u'ஆ')
-        self.failUnless(self.letter.is_vowel())
+        print "Testing Ezhuthu.is_consonant() with consonants - expecting True",
         
+        for consonant in Ezhuthu.get_consonants():
+            
+            self.assertTrue(Ezhuthu.is_consonant(consonant))
+
+        print ".... pass"
+        
+    def testIsConsonant_Combinations(self):
+        """is_consonant should return False on all combinations"""
+        
+        print "Testing Ezhuthu.is_consonant() with combinations - expecting False",
+        
+        for combination in COMBINATIONS.values():
+            
+            self.assertFalse(Ezhuthu.is_consonant(combination))
+
+        print ".... pass"    
+
+    def testIsCombination_Vowels(self):
+        """is_combination should return False for all vowels"""
+        
+        print "Testing Ezhuthu.is_combination() with vowels - expecting False", 
+        
+        for vowel in Ezhuthu.get_vowels():
+            
+            self.assertFalse(Ezhuthu.is_combination(vowel))
+            
+        print ".... pass "
+
+    def testIsCombination_Consonants(self):
+        """is_combination should return False on all consonants"""
+        
+        print "Testing Ezhuthu.is_combination() with consonants - expecting True",
+        
+        for consonant in Ezhuthu.get_consonants():
+            
+            self.assertFalse(Ezhuthu.is_combination(consonant))
+
+        print ".... pass"
+        
+    def testIsCombination_Combinations(self):
+        """is_combination should return True on all combinations"""
+        
+        print "Testing Ezhuthu.is_combination() with combinations - expecting False",
+        
+        for combination in COMBINATIONS.values():
+            
+            self.assertTrue(Ezhuthu.is_combination(combination))
+
+        print ".... pass"        
+
 
     
 def suite():
