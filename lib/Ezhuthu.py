@@ -115,7 +115,7 @@ class Ezhuthu:
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
         
-        return len(letter)==2 and (letter[1] == u'்')
+        return (len(letter)==2 and (letter[1] == u'்')) or letter==u'க்ஷ்'
     
     @staticmethod
     def is_combination(letter = u''):
