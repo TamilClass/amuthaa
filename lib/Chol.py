@@ -14,6 +14,9 @@ except ImportError:
 
 
 class Chol:
+    """
+    Module to handle the processing of Tamil words
+    """
     
     @staticmethod
     def get_letters(word = ""):

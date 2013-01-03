@@ -4,6 +4,9 @@
 import unicodedata
 
 class Ezhuthu:
+    """
+    Module to handle Tamil letter processing 
+    """
     
     ## Declare static variables
 
