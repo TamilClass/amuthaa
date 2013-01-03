@@ -130,6 +130,19 @@ class Ezhuthu:
         # and the second of which is a combination ending ( ே,  ி, etc.)
         return len(letter)==2 and (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ')) and letter[1] in Ezhuthu.COMBINATION_ENDINGS
 
+    @staticmethod
+    def get_vowels():
+        """ Returns a tuple of all the vowels """
+        
+        # get keys from VOWEL_TO_ENDING_MAP and convert to tuple
+        return tuple(Ezhuthu.VOWEL_TO_ENDING_MAP.keys())
+    
+    @staticmethod
+    def get_consonants():
+        """ Returns a tuple of all the consonants """
+    
+        # merge all sub-iterables in CONSONANTS into one tuple 
+        return  tuple(consonant for consonant_group in Ezhuthu.CONSONANTS.values() for consonant in consonant_group)
     
     @staticmethod
     def get_letter_type(letter = u''):
