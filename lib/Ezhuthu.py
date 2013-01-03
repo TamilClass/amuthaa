@@ -128,7 +128,7 @@ class Ezhuthu:
         
         # a letter is a combination if it has exactly two characters, the first of which is in the 'அ' column, 
         # and the second of which is a combination ending ( ே,  ி, etc.)
-        return len(letter)==2 and (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ')) and letter[1] in Ezhuthu.COMBINATION_ENDINGS
+        return (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ')) and (len(letter)==1 or (len(letter)==2 and letter[1] in Ezhuthu.COMBINATION_ENDINGS))
 
     @staticmethod
     def get_vowels():
