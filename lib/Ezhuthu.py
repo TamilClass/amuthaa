@@ -2,6 +2,7 @@
 #!/usr/bin/python
 
 import unicodedata
+import string
 
 class Ezhuthu:
     """
@@ -73,13 +74,14 @@ class Ezhuthu:
         if len(letter)==0:
             raise ValueError("Expected a Unicode character. Empty string received.")
         
-        # Check for non-Tamil characters
+        # Check for non-Tamil, non-whitespace characters
         script_language = Ezhuthu.get_script_name(letter).title()
-        if  not Ezhuthu.is_whitespace() and  script_language != 'Tamil':
-            raise ValueError("Expected a Tamil character. %s is from the %s script" %(letter, script_language))
+        if  script_language != 'Tamil' and not Ezhuthu.is_whitespace(letter):
+            raise ValueError("Expected a Tamil character or whitespace. %s is from the %s script" %(letter, script_language))
         
-        # Check for more than one character
-        # TODO: Implement this
+        # TODO: for more than one character
+        
+        # TODO: Allow punctuation and digits 
         
         # If we've gotten this far, everything seems to be alright
         return True
@@ -304,9 +306,33 @@ class Ezhuthu:
         """ Checks whether or not a given letter is whitespace (e.g. a space, tab, etc.) """
         
         #TODO: write test cases for this
-        return letter.isspace() or 'SPACE' in Ezhuthu.get_script_name(letter).upper()      
+        return letter.isspace() or unicodedata.category(letter)[0].upper() in ('Z')
+    
+
+    @staticmethod
+    def is_punctuation(letter = u''):
+        """ Checks whether or not a given letter is punctuation """
+        
+        #TODO: write test cases for this
+        #TODO: string.punctuation contains some symbols, so the condition below will return false positives
+        return letter in string.punctuation or unicodedata.category(letter)[0].upper() in ('P')
 
 
+    @staticmethod
+    def is_digit(letter = u''):
+        """ Checks whether or not a given letter is a digit """
+        
+        #TODO: write test cases for this
+        return letter.isnumeric() or letter.isdecimal() or unicodedata.category(letter[0]).upper() in ('N')
+
+
+    @staticmethod
+    def is_symbol(letter = u''):
+        """ Checks whether or not a given letter is a symbol """
+        
+        #TODO: write test cases for this
+        #TODO: See if the python string function has anything for handling this
+        return unicodedata.category(letter)[0].upper() in ('S')
 
                 
     @staticmethod
