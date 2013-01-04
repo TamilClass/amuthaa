@@ -413,6 +413,356 @@ class EzhuthuTest(unittest.TestCase):
             self.assertEqual(script_name, result_script_name, "Error on letter %s from script %s. Function returned %s" %(letter, script_name, result_script_name))        
         
         print ".... pass"    
+        
+    def testIsKuril_kuril(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testIsKuril_nedil(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+
+    def testIsNedil_kuril(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testIsNedil_nedil(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+    def testGetAytham(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testGetVowels(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+        
+    def testGetConsonants(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+    def testGetCombination_validInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testGetCombination_inValidInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+    def testSplitCombination_validInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testSplitCombination_inValidInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+        
+    def testGetLetterType(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+        
+    def testGetVowelType_validInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+        
+    def testGetVowelType_invalidInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+        
+    def testIsVallinam_TrueCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+        
+    def testIsVallinam_FalseCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+
+        
+    def testIsMellinam_TrueCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+        
+    def testIsMellinam_FalseCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+
+        
+    def testIdaiyinam_TrueCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+        
+    def testIdaiyinam_FalseCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+
+        
+    def testIsGrantha_TrueCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+        
+    def testIsGrantha_FalseCases(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+    def testGetColumn_validInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testGetColumn_inValidInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+    def testGetRow_validInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment
+        
+    def testGetRow_inValidInput(self):
+        """ function_name() should return the name of the script that the unicode character is encoded in """
+        #TODO: change the above description
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        #TODO: change the above description
+        
+        #TODO: Implement this
+        self.fail("unimplemented test case")
+        
+        #print ".... pass"    
+        #TODO: remove the above comment        
+
+
     
 def suite():
     suite = unittest.TestSuite()
