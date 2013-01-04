@@ -306,7 +306,7 @@ class Ezhuthu:
         """ Checks whether or not a given letter is whitespace (e.g. a space, tab, etc.) """
         
         #TODO: write test cases for this
-        return letter.isspace() or unicodedata.category(letter)[0].upper() in ('Z')
+        return len(letter)>0 and (letter.isspace() or unicodedata.category(letter)[0].upper()==u'Z')
     
 
     @staticmethod
