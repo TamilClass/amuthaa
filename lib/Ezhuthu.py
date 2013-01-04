@@ -385,22 +385,57 @@ class Ezhuthu:
         
 
     @staticmethod
-    def get_column(vowel = u''):
+    def get_combination_column(vowel = u''):
         """
         Returns a dictionary of combinations for a particular vowel, mapped by consonant
         """
-        #TODO: Implement thi
+        ## Ensure that letter is a valid Tamil unicode character and a vowel
+        Ezhuthu.validate_letter(vowel)
+        
+        if not Ezhuthu.is_vowel(vowel):
+            raise ValueError("Vowel required. %s is a %s" %(vowel, Ezhuthu.get_letter_type(vowel).title()))
+            
+        
+        # Declare empty dictionary
+        combination_col = {}
+        
+        # For each vowel, determine the respective consonant-vowel combination and add it to the dictionary object
+        for consonant in Ezhuthu.get_consonants():
+            
+            # The first letter of the combination is the அ combination for the consonant
+            # The second is an extension, which is obtained from the VOWEL_TO_ENDING_MAP
+            combination = consonant[0]+Ezhuthu.VOWEL_TO_ENDING_MAP[vowel]
+            combination_col.update({consonant : combination})
+            
+
+        return combination_col
         
         
     @staticmethod
-    def get_row(consonant = u''):
+    def get_combination_row(consonant = u''):
         """
         Returns a dictionary of combinations for a particular consonant, mapped by vowel
         """
-        for vowel in Ezhuthu.VOWELS:
-            #TODO: make this work
-            pass
-    
+        
+        ## Ensure that letter is a valid Tamil unicode character and a consonant
+        Ezhuthu.validate_letter(consonant)
+        
+        if not Ezhuthu.is_consonant(consonant):
+            raise ValueError("Consonant required. %s is a %s" %(consonant, Ezhuthu.get_letter_type(consonant).title()))
+            
+        
+        # Declare empty dictionary
+        combination_row = {}
+        
+        # For each vowel, determine the respective consonant-vowel combination and add it to the dictionary object
+        for vowel in Ezhuthu.get_vowels():
+            
+            # The first letter of the combination is the அ combination for the consonant
+            # The second is an extension, which is obtained from the VOWEL_TO_ENDING_MAP
+            combination = consonant[0]+Ezhuthu.VOWEL_TO_ENDING_MAP[vowel]
+            combination_row.update({vowel : combination})
+                        
 
-    
+        return combination_row
+
 
