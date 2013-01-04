@@ -75,7 +75,7 @@ class Ezhuthu:
         
         # Check for non-Tamil characters
         script_language = Ezhuthu.get_script_name(letter).title()
-        if  script_language != 'Tamil':
+        if  not Ezhuthu.is_whitespace() and  script_language != 'Tamil':
             raise ValueError("Expected a Tamil character. %s is from the %s script" %(letter, script_language))
         
         # Check for more than one character
@@ -298,6 +298,16 @@ class Ezhuthu:
         consonant, _ = Ezhuthu.split_combination(letter)        
         return consonant in Ezhuthu.CONSONANTS['GRANTHA']
     
+    
+    @staticmethod
+    def is_whitespace(letter = u''):
+        """ Checks whether or not a given letter is whitespace (e.g. a space, tab, etc.) """
+        
+        #TODO: write test cases for this
+        return letter.isspace() or 'SPACE' in Ezhuthu.get_script_name(letter).upper()      
+
+
+
                 
     @staticmethod
     def get_consonant_type(letter = u''):
