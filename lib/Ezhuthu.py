@@ -27,10 +27,10 @@ class Ezhuthu:
                             } 
     
     # create an inverse map as well
-    ENDING_TO_VOWEL_MAP = dict((ending, vowel) for vowel, ending in VOWEL_TO_ENDING_MAP.iteritems())
+    ENDING_TO_VOWEL_MAP = dict((ending, vowel) for vowel, ending in VOWEL_TO_ENDING_MAP.iteritems() if ending!=u'')
     
     # create vowel ending list from the dictionary's keys and values
-    COMBINATION_ENDINGS = VOWEL_TO_ENDING_MAP.values()
+    COMBINATION_ENDINGS = ENDING_TO_VOWEL_MAP.keys()
     
     PULLI =  u'்'
     
@@ -437,5 +437,15 @@ class Ezhuthu:
                         
 
         return combination_row
+    
+    @staticmethod
+    def get_combination_endings():
+        """
+        Returns a tuple of vowel combination endings
+        """
+        
+        # get the list of combination endings, remove the empty unicode string and convert to a tuple
+        return tuple(Ezhuthu.COMBINATION_ENDINGS)
+    
 
 
