@@ -440,9 +440,7 @@ class Ezhuthu:
     
     @staticmethod
     def get_combination_endings():
-        """
-        Returns a tuple of vowel combination endings
-        """
+        """ Returns a tuple of vowel combination endings (ி ,ீ , ே, etc.) """        
         
         #TODO: create a test case for this
         
