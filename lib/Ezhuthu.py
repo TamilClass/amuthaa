@@ -444,8 +444,19 @@ class Ezhuthu:
         Returns a tuple of vowel combination endings
         """
         
+        #TODO: create a test case for this
+        
         # get the list of combination endings, remove the empty unicode string and convert to a tuple
         return tuple(Ezhuthu.COMBINATION_ENDINGS)
+    
+    
+    @staticmethod
+    def get_pulli():
+        """ Returns the pulli codepoint ('்') """
+        
+        #TODO: Create a test case for this
+        
+        return Ezhuthu.PULLI
     
 
 
