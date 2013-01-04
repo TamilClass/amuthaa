@@ -325,6 +325,94 @@ class EzhuthuTest(unittest.TestCase):
         print ".... pass"        
 
 
+## Test get_script_name()
+
+    def testGetScriptName_Tamil(self):
+        """ get_script_name() should return the name of the script that the unicode character is encoded in """
+        
+        print "Testing Ezhuthu.get_script_name() with Tamil letters",
+        
+        tamil_letters = tuple(Ezhuthu.get_vowels())+tuple(Ezhuthu.get_consonants())+tuple(COMBINATIONS.values())
+
+        # Go through each Tamil letter
+        for letter in tamil_letters:
+
+            # format in title case
+            result_script_name = Ezhuthu.get_script_name(letter).title()
+            script_name = 'TAMIL'.title()
+            
+
+            # check for equality
+            self.assertEqual(script_name, result_script_name, "Error on letter %s from script %s. Function returned %s" %(letter, script_name, result_script_name))        
+        
+        print ".... pass"    
+        
+
+    def testGetScriptName_otherLanguages(self):
+        """ get_script_name() should return the name of the script that the unicode character is encoded in """
+        
+        print "Testing Ezhuthu.get_script_name() with letters from other scripts",
+        
+        other_languages = { 
+                           u'ඐ' : 'SINHALA', u'එ' : 'SINHALA', u'ඒ' : 'SINHALA', u'ඓ' : 'SINHALA', 
+                           u'ඔ' : 'SINHALA', u'ඕ' : 'SINHALA', u'ඖ' : 'SINHALA', u'ඳ' : 'SINHALA', 
+                           u'ප' : 'SINHALA', u'ඵ' : 'SINHALA', u'බ' : 'SINHALA', u'භ' : 'SINHALA', 
+                           u'ම' : 'SINHALA', u'ඹ' : 'SINHALA', u'ය' : 'SINHALA', u'ර' : 'SINHALA', 
+                           
+                           u'ഠ' : 'MALAYALAM', u'ഡ' : 'MALAYALAM', u'ഢ' : 'MALAYALAM', u'ണ' : 'MALAYALAM', u'ത' : 'MALAYALAM', 
+                           u'ഥ' : 'MALAYALAM', u'ദ' : 'MALAYALAM', u'ധ' : 'MALAYALAM', u'ന' : 'MALAYALAM', 
+                           
+                           u'ಠ' : 'KANNADA', u'ಡ' : 'KANNADA', u'ಢ' : 'KANNADA', u'ಣ' : 'KANNADA', u'ತ' : 'KANNADA', 
+                           u'ಥ' : 'KANNADA', u'ದ' : 'KANNADA', u'ಧ' : 'KANNADA', u'ನ' : 'KANNADA', 
+                           
+                           u'ఠ' : 'TELUGU', u'డ' : 'TELUGU', u'ఢ' : 'TELUGU', u'ణ' : 'TELUGU', u'త' : 'TELUGU', 
+                           u'థ' : 'TELUGU', u'ద' : 'TELUGU', u'ధ' : 'TELUGU', u'న' : 'TELUGU', 
+                           
+                           u'ऐ' : 'DEVANAGARI', u'ऑ' : 'DEVANAGARI', u'ऒ' : 'DEVANAGARI', u'ओ' : 'DEVANAGARI', 
+                           u'औ' : 'DEVANAGARI', u'क' : 'DEVANAGARI', u'ख' : 'DEVANAGARI', u'ग' : 'DEVANAGARI', 
+                           u'घ' : 'DEVANAGARI', u'ङ' : 'DEVANAGARI', u'च' : 'DEVANAGARI', u'छ' : 'DEVANAGARI', 
+                           u'ज' : 'DEVANAGARI', u'झ' : 'DEVANAGARI', u'ञ' : 'DEVANAGARI', u'ट' : 'DEVANAGARI', 
+                           
+                           u'A' : 'LATIN', u'B' : 'LATIN', u'C' : 'LATIN', u'D' : 'LATIN', u'E' : 'LATIN', 
+                           u'F' : 'LATIN', u'G' : 'LATIN', u'H' : 'LATIN', u'I' : 'LATIN', u'J' : 'LATIN', 
+                           u'K' : 'LATIN', u'L' : 'LATIN', u'M' : 'LATIN', u'N' : 'LATIN', u'O' : 'LATIN', 
+                           
+                           u'ฐ' : 'THAI', u'ฑ' : 'THAI', u'ฒ' : 'THAI', u'ณ' : 'THAI', u'ด' : 'THAI', u'ต' : 'THAI', 
+                           u'ถ' : 'THAI', u'ท' : 'THAI', u'ธ' : 'THAI', u'น' : 'THAI', u'บ' : 'THAI', 
+                           u'ป' : 'THAI', u'ผ' : 'THAI', u'ฝ' : 'THAI', u'พ' : 'THAI', u'ฟ' : 'THAI', 
+                           
+                           u'໐' : 'LAO', u'໑' : 'LAO', u'໒' : 'LAO', u'໓' : 'LAO', u'໔' : 'LAO', u'໕' : 'LAO', 
+                           u'໖' : 'LAO', u'໗' : 'LAO', u'໘' : 'LAO', u'໙' : 'LAO', u'ດ' : 'LAO', u'ຕ' : 'LAO', 
+                           u'ຖ' : 'LAO', u'ທ' : 'LAO', u'ນ' : 'LAO', u'ບ' : 'LAO', u'ປ' : 'LAO', u'ຜ' : 'LAO', 
+                           u'ຝ' : 'LAO', u'ພ' : 'LAO', u'ຟ' : 'LAO', 
+                           
+                           u'ཐ' : 'TIBETAN', u'ད' : 'TIBETAN', u'དྷ' : 'TIBETAN', u'ན' : 'TIBETAN', u'པ' : 'TIBETAN', 
+                           u'ཕ' : 'TIBETAN', u'བ' : 'TIBETAN', u'བྷ' : 'TIBETAN', u'མ' : 'TIBETAN', u'ཙ' : 'TIBETAN', 
+                           u'ཚ' : 'TIBETAN', u'ཛ' : 'TIBETAN', u'ཛྷ' : 'TIBETAN', u'ཝ' : 'TIBETAN', u'ཞ' : 'TIBETAN', 
+                           u'ཟ' : 'TIBETAN', 
+                           
+                           u'ថ' : 'KHMER', u'ទ' : 'KHMER', u'ធ' : 'KHMER', u'ន' : 'KHMER', u'ប' : 'KHMER', 
+                           u'ផ' : 'KHMER', u'ព' : 'KHMER', u'ភ' : 'KHMER', u'ម' : 'KHMER', u'យ' : 'KHMER', 
+                           u'រ' : 'KHMER', u'ល' : 'KHMER', u'វ' : 'KHMER', u'ឝ' : 'KHMER', u'ឞ' : 'KHMER', 
+                           u'ស' : 'KHMER', 
+                           
+                           u'ᠠ' : 'MONGOLIAN', u'ᠡ' : 'MONGOLIAN', u'ᠢ' : 'MONGOLIAN', u'ᠣ' : 'MONGOLIAN', 
+                           u'ᠤ' : 'MONGOLIAN', u'ᠥ' : 'MONGOLIAN', u'ᠦ' : 'MONGOLIAN', u'ᠧ' : 'MONGOLIAN', 
+                           u'ᠨ' : 'MONGOLIAN', u'ᠩ' : 'MONGOLIAN', u'ᠪ' : 'MONGOLIAN', u'ᠫ' : 'MONGOLIAN', 
+                           u'ᠬ' : 'MONGOLIAN', u'ᠭ' : 'MONGOLIAN', u'ᠮ' : 'MONGOLIAN', u'ᠯ' : 'MONGOLIAN' 
+        }
+
+        # Go through each key, value pair from above
+        for letter in other_languages:
+
+            # format in title case
+            result_script_name = Ezhuthu.get_script_name(letter).title()
+            script_name = other_languages[letter].title()
+
+            # check for equality
+            self.assertEqual(script_name, result_script_name, "Error on letter %s from script %s. Function returned %s" %(letter, script_name, result_script_name))        
+        
+        print ".... pass"    
     
 def suite():
     suite = unittest.TestSuite()
