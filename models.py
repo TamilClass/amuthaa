@@ -100,11 +100,13 @@ class Word(models.Model):
 
 # Finite choice of letters types
 LETTER_TYPES = (
+    ('ay', 'Aytham'),
     ('sv', 'Short Vowel' ),
     ('lv', 'Long Vowel'),
     ('hc', 'Hard Consonant'),    
-    ('sc', 'Soft Consonant'),    
+    ('sc', 'Soft Consonant'),
     ('mc', 'Medium Consonant'),    
+    ('gc', 'Grantha Consonant'),    
     ('cb', 'Combination'),    
 )
 
