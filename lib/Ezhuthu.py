@@ -41,7 +41,11 @@ class Ezhuthu:
                   'VALLINAM'  : (u'க்', u'ச்', u'ட்', u'த்', u'ப்', u'ற்'),
                   'MELLINAM'  : (u'ங்', u'ஞ்', u'ண்', u'ந்', u'ம்', u'ன்'),
                   'IDAIYINAM' : (u'ய்',u'ர்', u'ல்', u'வ்', u'ழ்', u'ள்'),
-                  'GRANTHA'   : (u'ஶ்', u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்', u'க்ஷ்')
+
+                  ## Removing support for 'க்ஷ்' temporarily
+                  #TODO: Add support for 'க்ஷ்'
+                  #'GRANTHA'   : (u'ஶ்', u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்', u'க்ஷ்')
+                  'GRANTHA'   : (u'ஶ்', u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்')
                   }
     
     VOWELS = {
