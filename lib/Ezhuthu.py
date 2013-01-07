@@ -42,10 +42,10 @@ class Ezhuthu:
                   'MELLINAM'  : (u'ங்', u'ஞ்', u'ண்', u'ந்', u'ம்', u'ன்'),
                   'IDAIYINAM' : (u'ய்',u'ர்', u'ல்', u'வ்', u'ழ்', u'ள்'),
 
-                  ## Removing support for 'க்ஷ்' temporarily
-                  #TODO: Add support for 'க்ஷ்'
+                  ## Removing support for 'க்ஷ்' and 'ஶ்' temporarily
+                  #TODO: Add support for 'க்ஷ்', 'ஶ்'
                   #'GRANTHA'   : (u'ஶ்', u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்', u'க்ஷ்')
-                  'GRANTHA'   : (u'ஶ்', u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்')
+                  'GRANTHA'   : (u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்')
                   }
     
     VOWELS = {
@@ -72,7 +72,7 @@ class Ezhuthu:
         
         # Check for non-unicode objects
         if not isinstance(letter, unicode):
-            raise TypeError("Must be. Value %s of type %s received" %(letter, type(letter)))
+            raise TypeError("Must be unicode string. Value \'%s\' of type %s received" %(letter, type(letter)))
 
         # Check for empty strings
         if len(letter)==0:
@@ -81,7 +81,7 @@ class Ezhuthu:
         # Check for non-Tamil, non-whitespace characters
         script_language = Ezhuthu.get_script_name(letter).title()
         if  script_language != 'Tamil' and not Ezhuthu.is_whitespace(letter):
-            raise ValueError("Expected a Tamil character or whitespace. %s is from the %s script" %(letter, script_language))
+            raise ValueError("Expected a Tamil character or whitespace. \'%s\' is from the %s script" %(letter, script_language))
         
         # TODO: for more than one character
         
@@ -127,8 +127,10 @@ class Ezhuthu:
             return 'CONSONANT'
         elif Ezhuthu.is_combination(letter):
             return 'COMBINATION'
+        elif Ezhuthu.is_aytham(letter):
+            return 'AYTHAM'
         else:
-            raise Exception("Unknown error. Letter %s is coming up as neither a vowel, consonant or combination" %letter)
+            raise Exception("Unknown error. Letter \'%s\' is coming up as neither a vowel, consonant or combination" %letter)
 
     @staticmethod
     def is_aytham(letter = u''):
@@ -183,16 +185,10 @@ class Ezhuthu:
     def is_kuril(letter = u''):
         """ 
         A character is 'kuril' if it is a vowel or combination with a short sound.
-        Raise a TypeError if the letter is a consonant.
         """      
         
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
-        
-        ## This was commented out so that function is more forgiving, raising less exceptions
-        # consonants cannot be kuril or nedil
-        #if Ezhuthu.is_consonant(letter):
-            #raise TypeError("The kuril/nedil (long vowel / short vowel) distinction only applies to vowels and to combinations. %s is a consonant." %letter)
         
         # retrieve the vowel component of the letter and check if it's a kuril sound
         _, vowel = Ezhuthu.split_combination(letter)        
@@ -201,17 +197,11 @@ class Ezhuthu:
     
     @staticmethod
     def is_nedil(letter = u''):
-        """ a character is 'nedil' if it is a vowel or combination with a short sound
-            Raise a TypeError if the letter is a consonant.
+        """ a character is 'nedil' if it is a vowel or combination with a short sound.
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
-        
-        ## This was commented out so that function is more forgiving, raising less exceptions
-        # consonants cannot be kuril or nedil
-        # if Ezhuthu.is_consonant(letter):
-            # raise TypeError("The kuril/nedil (long vowel / short vowel) distinction only applies to vowels and to combinations. %s is a consonant." %letter)
 
         # retrieve the vowel component of the letter and check if it's a kuril sound
         _, vowel = Ezhuthu.split_combination(letter)        
@@ -227,9 +217,12 @@ class Ezhuthu:
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
         
-        # ensure that the letter is a vowel
+        # ensure that the letter is a vowel or combination
         if not Ezhuthu.is_vowel(letter) and not Ezhuthu.is_combination(letter):
-            raise ValueError("Vowel or combination expected, but the letter %s is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))
+            raise ValueError("Vowel or combination expected, but the letter \'%s\' is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))
+        
+        # if letter is a combination, split out the vowel part
+        _, letter = Ezhuthu.split_combination(letter)
         
         # retrieve and return the vowel type 
         for vowel_type in Ezhuthu.VOWELS:
@@ -237,7 +230,7 @@ class Ezhuthu:
                 return vowel_type
         
         # if we got this far, an unknown error occurred
-        raise Exception("Unknown error. Letter %s is coming up as neither kuril nor nedil" %letter)        
+        raise Exception("Unknown error. Letter \'%s\' is coming up as neither kuril nor nedil" %letter)        
 
 
     @staticmethod
@@ -249,8 +242,9 @@ class Ezhuthu:
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
         
+        # if not consonant, it is not a vallinam consonant
         if not Ezhuthu.is_consonant(letter):
-            raise ValueError("Consonant expected, but the letter %s is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))        
+            return False        
         
         # retrieve the consonant component of the letter and check if it's a hard consonant
         consonant, _ = Ezhuthu.split_combination(letter)        
@@ -266,7 +260,7 @@ class Ezhuthu:
         Ezhuthu.validate_letter(letter)
         
         if not Ezhuthu.is_consonant(letter):
-            raise ValueError("Consonant expected, but the letter %s is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))        
+            return False        
         
         # retrieve the consonant component of the letter and check if it's a soft consonant
         consonant, _ = Ezhuthu.split_combination(letter)        
@@ -281,8 +275,9 @@ class Ezhuthu:
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
         
+        # if not consonant, it is not an idaiyinam consonant
         if not Ezhuthu.is_consonant(letter):
-            raise ValueError("Consonant expected, but the letter %s is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))        
+            return False        
         
         # retrieve the consonant component of the letter and check if it's a medium consonant
         consonant, _ = Ezhuthu.split_combination(letter)        
@@ -297,8 +292,9 @@ class Ezhuthu:
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
         
+        # if not a consonant, it is not a grantha consonant 
         if not Ezhuthu.is_consonant(letter):
-            raise ValueError("Consonant expected, but the letter %s is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))        
+            return False        
         
         # retrieve the consonant component of the letter and check if it's a grantha consonant
         consonant, _ = Ezhuthu.split_combination(letter)        
@@ -350,7 +346,7 @@ class Ezhuthu:
         
         # ensure that the letter is a vowel
         if not Ezhuthu.is_consonant(letter):
-            raise ValueError("Consonant expected, but the letter %s is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))
+            raise ValueError("Consonant expected, but the letter \'%s\' is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))
         
         # retrieve and return the vowel type 
         for consonant_type in Ezhuthu.CONSONANTS:
@@ -358,7 +354,7 @@ class Ezhuthu:
                 return consonant_type
         
         # if we got this far, an unknown error occurred
-        raise Exception("Unknown error. Letter %s is coming up as neither kuril nor nedil" %letter)    
+        raise Exception("Unknown error. Letter \'%s\' is coming up as neither kuril nor nedil" %letter)    
     
 
     @staticmethod
@@ -372,10 +368,10 @@ class Ezhuthu:
         Ezhuthu.validate_letter(vowel)
         
         if not Ezhuthu.is_consonant(consonant):
-            raise ValueError("Consonant expected. %s is not a consonant" %consonant)
+            raise ValueError("Consonant expected. \'%s\' is not a consonant" %consonant)
 
         if not Ezhuthu.is_vowel(vowel):
-            raise ValueError("Vowel expected. %s is not a vowel" %(vowel))
+            raise ValueError("Vowel expected. \'%s\' is not a vowel" %(vowel))
         
         # store combination initially as an array
         combination = []
@@ -400,15 +396,15 @@ class Ezhuthu:
         if Ezhuthu.is_consonant(letter):
             return letter,  u''
         
-        # if vowel or Aytham, no consonant in the tuple 
-        elif Ezhuthu.is_vowel(letter) or Ezhuthu.is_aytham(letter):
+        # if vowel, no consonant in the tuple 
+        elif Ezhuthu.is_vowel(letter):
             return  u'', letter
         
         # if combination ending with -அ, return அ 
         elif len(letter)==1 and (ord(u'க') <= ord(letter) <= ord(u'ஹ')):
-            return letter, u'அ' 
+            return letter+Ezhuthu.get_pulli(), u'அ' 
         
-        # otherwise, separate the vowel from the extension and return it
+        # if non-அ combination, separate the vowel from the extension and return it
         elif len(letter)==2 and Ezhuthu.is_combination(letter):
             
             # the consonant is the first part, plus the pulli
@@ -423,6 +419,13 @@ class Ezhuthu:
             # return the (consonant, vowel) tuple           
             return consonant, vowel
         
+        # if aytham, return empty unicode strings for both vowel and consonant
+        elif Ezhuthu.is_aytham(letter):
+            return u'', u''
+        
+        else:
+            raise Exception("An unknown exception occurred for letter %s." %letter)
+        
 
     @staticmethod
     def get_combination_column(vowel = u''):
@@ -433,7 +436,7 @@ class Ezhuthu:
         Ezhuthu.validate_letter(vowel)
         
         if not Ezhuthu.is_vowel(vowel):
-            raise ValueError("Vowel required. %s is a %s" %(vowel, Ezhuthu.get_letter_type(vowel).title()))
+            raise ValueError("Vowel required. \'%s\' is a %s" %(vowel, Ezhuthu.get_letter_type(vowel).title()))
             
         
         # Declare empty dictionary
@@ -461,7 +464,7 @@ class Ezhuthu:
         Ezhuthu.validate_letter(consonant)
         
         if not Ezhuthu.is_consonant(consonant):
-            raise ValueError("Consonant required. %s is a %s" %(consonant, Ezhuthu.get_letter_type(consonant).title()))
+            raise ValueError("Consonant required. \'%s\' is a %s" %(consonant, Ezhuthu.get_letter_type(consonant).title()))
             
         
         # Declare empty dictionary
