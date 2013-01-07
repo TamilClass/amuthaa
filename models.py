@@ -53,7 +53,7 @@ class VerbRoot(models.Model):
 
 # Verb class
 class VerbClass(models.Model):
-    category            = models.IntegerField
+    category            = models.IntegerField()
     subcategory         = models.CharField(max_length=1, null=True, blank=True, default="")
 
     # pedagogical information
