@@ -4,8 +4,44 @@
 from Ezhuthu import Ezhuthu
 from Chol import Chol
 
+# Suffix dictionary: maps suffix to வேற்றுமை type
+SUFFIX = {
+            u'ஐ' : 1,
+            u'ஆல்' : 2,
+            u'ஓடு' : 2,
+            u'உடன்' : 2,
+            u'கு' : 4,
+            u'இல்' : 5,
+            u'இன்' : 5,
+            u'ஐ விட' : 5,
+            # u' இனின்று' : 5,  - commented this out. Never heard of it
+            u'இலிருந்து' : 5,
+            u'அது' : 6,
+            u'ஆது' : 6,
+            u'அ' : 6,
+            u'உடைய' : 6,
+            u'இனுடைய' : 6,
+            u'இல்' : 7,
+            u'இடத்தில்' : 7,
+            u'மேல்' : 7,
+            u'இன்மேல்' : 7,
+            u'கீழ்' : 7,
+            u'இன்கீழ்' : 7,
+            u'உள்' : 7,
+            u'கு உள்' : 7,
+            u'உம்' : 0,
+            u'ஆ' : 0,
+            u'ஏ' : 0,
+            u'ஓ' : 0
+            }
+
 
 class Noun(Chol):
+    
+
+    
+    def __init__(self, text=u''):
+        self._noun_class    = None
 
         
     @staticmethod
@@ -21,8 +57,7 @@ class Noun(Chol):
         
         ### See flowchart in docs/material/sendhil/noun_classes.png for more details
         
-        Chol.validate_word(word)
-        word = Chol.split_letters(word)
+        word = Chol(word)
         
         ## For noun classes ending in a consonant:
         ## Ending in ம் -> class 1
@@ -73,8 +108,7 @@ class Noun(Chol):
             else:
                 return 9
         
-    @staticmethod
-    def add_suffix(word = u'', word_class=0, suffix = ''):
+    def add_suffix(suffix = u''):
         """ docstring """
 
         

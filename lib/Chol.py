@@ -11,14 +11,71 @@ class Chol:
     """
     Module to handle the processing of Tamil words
     """
-
-    @staticmethod
-    def validate_word(word=u''):
-        """ docstring """   
-
+    
+    def __init__(self, text=u''):
+        """ Constructor for Chol class. Takes a unicode string composed of Tamil characters as an optional input. """ 
         
-        #TODO: implement method
+        self._text          = u''
+        self._syllables     = []
+        self._letters       = []
+        
+        # if text is entered, call the text property's setter (which generates the syllables and letters lists)
+        if text: self.text(text)
+        
+    
+    def __getitem__(self,index):
+        """ Read the letter at the given position in the letters list """
+        
+        self._letters[index]
+    
+    
+    def __setitem__(self, index, value):
+        """ Modify a member at the given position in the letters list """
+        
+        self._letters[index] =  value
+        
+    
+    @property
+    def text(self):
+        return self._text
+    
+    @text.setter
+    def text(self, text):
+    
+        # if valid text is entered, calculate syllables and letters
+    
+        if self.validate():
+            self.text = text
+            
+            self._letters = self.split_letters(text)
+            #TODO: calculate syllables
+        
+        # if invalid text is entered, initialize to empty string
+        else:
+            self.text = u''
+    
+    
+    @property
+    def syllables(self):
+        return self._syllables
+    
+    @property
+    def letters(self):
+        return self._letters
+    
+            
+    def validate(self):
+        """ Checks whether the given word is valid """   
+        
+        # simple test: every element of the string has to be a valid Tamil character
+        for codepoint in self.text:
+            Ezhuthu.validate_letter(codepoint)
+         
+        
+        #TODO: implement method this more thoroughly
         #TODO: check for pulli or combination_ending at the beginning of a word 
+        
+        return True
 
     
     @staticmethod
@@ -73,13 +130,44 @@ class Chol:
         print
         
     
-    
     @staticmethod
-    def num_syllables(word=u''):
-        """ docstring """
-
+    def split_syllables(letters = []):
+        """ Returns the syllables in a given word as a list """   
         
-        #TODO: Implement method
+        ## Generic algorithm:
+        ## Each vowel and combination is its own syllable. Consonants and aytham get added to the end of the previous syllable
+        
+        # ensure that the word is a valid word
+        Chol.validate_word(''.join(letters))
+        
+        # initialize empty list
+        syllables = []
+        
+        # loop through letters in the word
+        for letter in letters: 
+            
+            # if letter is a vowel or combination, it gets its own syllable 
+            if Ezhuthu.is_combination(letter) or Ezhuthu.is_vowel(letter):
+                syllables.append(letter)
+            
+            # if codepoint is a consonant or aytham, add it to the end of the previously-added codepoint
+            elif Ezhuthu.is_consonant(letter) or Ezhuthu.is_aytham(letter):
+                
+                # ensure that at least one character already exists
+                if len(syllables) > 0:
+                    syllables[-1] = syllables[-1] + letter
+                
+                # if the first letter is a consonant (probably b/c it' s a loanword), add it to the beginning of the string
+                else:
+                    syllables.append(letter) 
+                
+            # if codepoint was neither a vowel, aytham, a pulli or a combination ending, an unexpected error has occurred
+            else:
+                raise Exception("Unknown error: The letter \'%s\' in word %s is neither a vowel, consonant, combination or aytham" %(letter, ''.join(letters)))
+            
+        
+        #TODO: Write extensive test cases for this
+
         
     
            
