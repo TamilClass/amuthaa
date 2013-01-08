@@ -432,7 +432,7 @@ class EzhuthuTest(unittest.TestCase):
     ## Test is_consonant() with aytham, vowels, consonants and combinations 
     
     def testIsConsonant_Aytham(self):
-        """is_consonant should return True for aytham"""
+        """is_consonant should return False for aytham"""
         
         print "Testing Ezhuthu.is_consonant() with aytham - expecting False", 
         
