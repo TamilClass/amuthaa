@@ -140,7 +140,7 @@ class Ezhuthu:
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
         
-        return letter == Ezhuthu.AYTHAM
+        return letter == Ezhuthu.get_aytham()
     
     
     ## Boolean methods to check whether a given letter is aytham, a vowel, a consonant or a combination
@@ -149,7 +149,7 @@ class Ezhuthu:
     def is_vowel(letter = u''):
         """ 
         a character is a vowel if it has a length of one and if its value is between
-        1249 (அ) and 1263 (ஔ)
+        2949 (அ) and 2964 (ஔ)
         """ 
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
