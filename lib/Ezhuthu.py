@@ -222,11 +222,11 @@ class Ezhuthu:
             raise ValueError("Vowel or combination expected, but the letter \'%s\' is a %s" %(letter, Ezhuthu.get_letter_type(letter).title()))
         
         # if letter is a combination, split out the vowel part
-        _, letter = Ezhuthu.split_combination(letter)
+        _, vowel = Ezhuthu.split_combination(letter)
         
         # retrieve and return the vowel type 
         for vowel_type in Ezhuthu.VOWELS:
-            if letter in Ezhuthu.VOWELS[vowel_type]:
+            if vowel in Ezhuthu.VOWELS[vowel_type]:
                 return vowel_type
         
         # if we got this far, an unknown error occurred
