@@ -197,13 +197,13 @@ class Ezhuthu:
     
     @staticmethod
     def is_nedil(letter = u''):
-        """ a character is 'nedil' if it is a vowel or combination with a short sound.
+        """ a character is 'nedil' if it is a vowel or combination with a long sound.
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme 
         Ezhuthu.validate_letter(letter)
 
-        # retrieve the vowel component of the letter and check if it's a kuril sound
+        # retrieve the vowel component of the letter and check if it's a nedil sound
         _, vowel = Ezhuthu.split_combination(letter)        
         return vowel in Ezhuthu.VOWELS['NEDIL']
     
