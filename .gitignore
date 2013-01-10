@@ -1,4 +1,8 @@
-*.log
-*.pot
+# Compiled python modules.
 *.pyc
-local_settings.py
+
+# Setuptools distribution folder.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
