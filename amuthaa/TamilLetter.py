@@ -478,8 +478,8 @@ class TamilLetter:
             combination = consonant[0]+TamilLetter.VOWEL_TO_ENDING_MAP[vowel]
             combination_row.update({vowel : combination})
                         
-
         return combination_row
+
     
     @staticmethod
     def get_combination_endings():
@@ -498,6 +498,3 @@ class TamilLetter:
         #TODO: Create a test case for this
         
         return TamilLetter.PULLI
-    
-
-
