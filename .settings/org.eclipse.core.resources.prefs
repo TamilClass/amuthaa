@@ -3,5 +3,7 @@ encoding//amuthaa/TamilLetter.py=utf-8
 encoding//amuthaa/TamilNoun.py=utf-8
 encoding//amuthaa/TamilVerb.py=utf-8
 encoding//amuthaa/TamilWord.py=utf-8
+encoding//amuthaa/samples/sample_TamilWord.py=utf-8
 encoding//amuthaa/test/test_TamilLetter.py=utf-8
 encoding//amuthaa/test/test_TamilWord.py=utf-8
+encoding//docs/conf.py=utf-8
