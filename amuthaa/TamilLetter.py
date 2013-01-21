@@ -61,14 +61,14 @@ class TamilLetter:
               }
 
     @staticmethod
-    def get_script_name(letter=u''):
+    def get_script_name(codepoint=u''):
         """ Returns name of character's script
 
         Returns the name of the script in which the unicode codepoint is
         encoded.
 
         Args:
-            letter: A single unicode codepoint
+            codepoint: A single unicode codepoint
 
         Returns:
             A string containing the name of the script that the unicode
@@ -78,11 +78,15 @@ class TamilLetter:
             it would return 'Cyrillic'
 
         Raises:
-            TypeError: A single unicode character was not entered
+            TypeError: A single unicode codepoint was not entered
 
         """
 
-        return unicodedata.name(letter[0]).split()[0]
+        if (not codepoint or
+            len(codepoint) != 1 or not isinstance(codepoint, unicode)):
+                raise TypeError("Expecting single unicode character")
+
+        return unicodedata.name(codepoint[0]).split()[0]
 
     @staticmethod
     def validate_letter(letter=u''):
@@ -96,7 +100,7 @@ class TamilLetter:
             raise TypeError("Must be unicode string. Value \'%s\' of type %s received" %(letter, type(letter)))
 
         # Check for empty strings
-        if len(letter)==0:
+        if len(letter) == 0:
             raise ValueError("Expected a Unicode character. Empty string received.")
 
         # Check for non-Tamil, non-whitespace characters
@@ -149,7 +153,7 @@ class TamilLetter:
         elif TamilLetter.is_aytham(letter):
             return 'AYTHAM'
         else:
-            raise Exception("Unknown error. Letter \'%s\' is coming up as neither a vowel, consonant or combination" %letter)
+            raise Exception("Unknown error. Letter \'%s\' is coming up as neither a vowel, consonant combination, or aytham" %letter)
 
     @staticmethod
     def is_aytham(letter=u''):
