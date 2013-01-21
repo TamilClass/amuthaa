@@ -100,4 +100,3 @@ Here is a sampling of the TamilLetter class::
 	The letter औ is in the DEVANAGARI script
 	The letter ល is in the KHMER script
 	The letter a is in the LATIN script
-	>>> 
