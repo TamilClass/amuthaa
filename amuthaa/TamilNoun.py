@@ -5,50 +5,44 @@ from TamilLetter import TamilLetter
 from TamilWord import TamilWord
 
 # Suffix dictionary: maps suffix to வேற்றுமை type
-SUFFIX = {
-            u'ஐ' : 1,
-            u'ஆல்' : 2,
-            u'ஓடு' : 2,
-            u'உடன்' : 2,
-            u'கு' : 4,
-            u'இல்' : 5,
-            u'இன்' : 5,
-            u'ஐ விட' : 5,
-            # u' இனின்று' : 5,  - commented this out. Never heard of it
-            u'இலிருந்து' : 5,
-            u'அது' : 6,
-            u'ஆது' : 6,
-            u'அ' : 6,
-            u'உடைய' : 6,
-            u'இனுடைய' : 6,
-            u'இல்' : 7,
-            u'இடத்தில்' : 7,
-            u'மேல்' : 7,
-            u'இன்மேல்' : 7,
-            u'கீழ்' : 7,
-            u'இன்கீழ்' : 7,
-            u'உள்' : 7,
-            u'கு உள்' : 7,
-            u'உம்' : 0,
-            u'ஆ' : 0,
-            u'ஏ' : 0,
-            u'ஓ' : 0
-            }
+SUFFIX_VETTRUMAI = {
+                    u'ஐ' : 2,
+                    u'ஆல்' : 3,
+                    u'ஓடு' : 3,
+                    u'உடன்' : 3,
+                    u'கு' : 4,
+                    u'இல்' : 5,
+                    u'இன்' : 5,
+                    u'ஐ விட' : 5,
+                    # u' இனின்று' : 5,  - commented this out. Never heard of it
+                    u'இலிருந்து' : 5,
+                    u'அது' : 6,
+                    u'ஆது' : 6,
+                    u'அ' : 6,
+                    u'உடைய' : 6,
+                    u'இனுடைய' : 6,
+                    u'இல்' : 7,
+                    u'இடத்தில்' : 7,
+                    u'மேல்' : 7,
+                    u'இன்மேல்' : 7,
+                    u'கீழ்' : 7,
+                    u'இன்கீழ்' : 7,
+                    u'உள்' : 7,
+                    u'கு உள்' : 7,
+                    u'உம்' : 0,
+                    u'ஆ' : 0,
+                    u'ஏ' : 0,
+                    u'ஓ' : 0
+                    }
 
 
 class TamilNoun(TamilWord):
     
 
-    
-    def __init__(self, text=u''):
-        self._noun_class    = None
-
-        
     @staticmethod
     def validate_class(noun_class = 0):
         """ docstring """
 
-        
         #TODO: implement method
     
     @staticmethod
@@ -56,6 +50,7 @@ class TamilNoun(TamilWord):
         """ Returns the noun class for a given word """
         
         ### See flowchart in docs/material/sendhil/noun_classes.png for more details
+        # TODO: Upload the flowchart to the github wiki and Update the above comment
         
         word = TamilWord(word)
         
@@ -109,12 +104,87 @@ class TamilNoun(TamilWord):
                 return 9
         
     @staticmethod
-    def add_suffix(suffix = u''):
-        """ docstring """
-        pass
-        #TODO: Implement method
-             
-             
+    def add_suffix(word = u'', suffix = u''):
+        """ Adds a given suffix to a given noun and returns the result """
+
+        # validate word and get noun class
+        TamilWord.validate(word)
+        noun_class = TamilNoun.get_class(word)
+        word = TamilWord(word)
+        
+        #TODO: validate the suffix
+        
+        # Class 1: Word ends in ம்
+        # a) Remove ம், and add த்த்
+        # b) Simple combination
+        if noun_class == 1:
+            
+            # change ம்->த் if we're dealing with a vettRumai 
+            if SUFFIX_VETTRUMAI[suffix]:
+            
+                word[-1] = u'த்'
+                
+            # in either case, add the suffix through a simple combination
+            word.add_ending(suffix)
+            
+        # Class 2: _______________________
+        # a) Double the last consonant
+        # b) Double the last consonant
+        elif noun_class == 2:
+            
+            # double the last letter then add the suffix, whether it's a veTTrumai urubu or not
+            word += word[-1]
+            word.add_ending(suffix)
+        
+        
+        # Class 3: Ends in consonant, not in class 1 or 2
+        # a) Simple combination
+        # b) Simple combination
+        elif noun_class == 3:
+            
+            # simple combination
+            word.add_ending(suffix)
+            
+        
+        # Class 4: Ends in இ, ஈ, ஐ, எ
+        # a) Add ய்
+        # b) Add ய்
+        elif noun_class == 4:
+            # add ய் first, then simple combination
+            word += u'ய்'
+            word.add_ending(suffix)
+        
+        # Class 5, 6: Ends in ஆ, ஓ, ஊ or _______________________
+        # a) Add வ்
+        # b) Add வ்
+        elif noun_class in (5, 6):
+        
+            # add வ் first, then simple combination
+            word += 'வ்'
+            word.add_ending(suffix)
+        
+        # Class 7, 8: Ends in டு or று
+        # a) Split combination, remove vowel, double consonant
+        elif noun_class in (7, 8) and SUFFIX_VETTRUMAI[suffix]:
+        
+            # Remove the 'உ' component of the last letter, double the last letter, then simple combination
+            consonant, _ = TamilLetter.split_combination(word[-1])
+            word[-1] = consonant
+            word += consonant
+            word.add_ending(suffix)
+        
+        # Class 7, 8: Ends in டு or று
+        # b) Split combination, remove vowel, simple combination
+        # Class 9: Ends in உ, not in class 6, 7 or 8
+        # a) Split combination, remove vowel, simple combination
+        # b) Split combination, remove vowel, simple combination
+        elif (noun_class in (7, 8) and not SUFFIX_VETTRUMAI[suffix]) or noun_class == 9:
+
+            # Remove the 'உ' component of the last letter, then simple combination
+            consonant, _ = TamilLetter.split_combination(word[-1])
+            word[-1] = consonant
+            word.add_ending(suffix)
+
     
     @staticmethod
     def get_plural(word = u''):
