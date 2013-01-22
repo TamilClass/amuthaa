@@ -270,7 +270,7 @@ class TamilLetter:
 
     @staticmethod
     def is_consonant(letter=u''):
-        """ Returns whether or not a given Tamil unicode grapheme is a consonant
+        """ Returns whether or not given Tamil unicode grapheme is a consonant
 
         Return whether the given input is a Tamil consonant.
         A character is a consonant if it has a length of two, its first
@@ -296,8 +296,23 @@ class TamilLetter:
 
     @staticmethod
     def is_combination(letter=u''):
-        """
-        Check whether a letter is a combination or not
+        """ Returns whether given Tamil unicode grapheme is a combination
+
+        Return whether the given input is a Tamil combination.
+        A character is a combination if it has a length of two, its first
+        codepoint is a letter from the அ ('a') combination column and its
+        second codepoint is a valid combination ending (e.g. ே,  ி)
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            True: If input is a valid Tamil combination
+            False: input is valid Tamil unicode grapheme but not a combination
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
