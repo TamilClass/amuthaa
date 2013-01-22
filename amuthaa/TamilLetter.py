@@ -381,8 +381,23 @@ class TamilLetter:
 
     @staticmethod
     def get_vowel_type(letter=u''):
-        """
-        Returns the vowel type (i.e. 'KURIL' or 'NEDIL')
+        """ Returns the vowel type (i.e. 'KURIL' or 'NEDIL') of a given vowel
+
+        Returns the vowel type of a given vowel: either 'KURIL' (short)
+        or 'NEDIL' (long).
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            String: 'KURIL' if the letter is a valid Tamil unicode grapheme
+                    and is short (i.e. either அ, இ, உ, எ, or ஒ).
+                    'NEDIL' if the letter is a valid Tamil unicode grapheme
+                    and is long (i.e. one of ஆ, ஈ, ஊ, ஏ, ஐ, ஓ, ஔ)
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
