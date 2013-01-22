@@ -149,7 +149,7 @@ class TamilWord(object):
         # simple test: every element of string must be valid Tamil character
 
         for codepoint in word:
-            TamilLetter.validate_letter(codepoint)
+            TamilLetter.assert_valid_letter(codepoint)
 
         # TODO: implement method this more thoroughly
         # TODO: check for pulli or combination_ending at beginning of word
