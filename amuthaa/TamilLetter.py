@@ -199,7 +199,7 @@ class TamilLetter:
 
         Raises:
             TypeError: Input was not of type unicode
-            ValueError: Empty string, or non-Tamil grapheme or codepoint
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
@@ -219,23 +219,50 @@ class TamilLetter:
 
     @staticmethod
     def is_aytham(letter=u''):
-        """
-        Checks whether the given letter is the Aytha TamilLetter (ஃ)
+        """ Checks whether given unicode object is equal to Aytham (ஃ)
+
+        Checks whether the given codepoint is equal to the the Tamil
+        letter Aytham (ஃ)
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            True: if input is equal to the Aytham letter (ஃ)
+            False: input is a valid Tamil unicode character other than Aytham
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
 
         return letter == TamilLetter.get_aytham()
 
-
-    # # Boolean methods to check whether a given letter is aytham, a vowel, a consonant or a combination
+    # Boolean methods to check whether a given letter is aytham, a vowel,
+    # a consonant or a combination
 
     @staticmethod
     def is_vowel(letter=u''):
+        """ Returns whether or not a given Tamil unicode grapheme is a vowel
+
+        Return whether the given input is a valid Tamil unicode grapheme.
+        A character is a vowel if it has a length of one and its codepoint has
+        a decimal value between 2949 (அ) and 2964 (ஔ)
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            True: If input is a valid Tamil vowel
+            False: input is a valid Tamil unicode grapheme but not a vowel
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
-        a character is a vowel if it has a length of one and if its value is between
-        2949 (அ) and 2964 (ஔ)
-        """
+
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
 
