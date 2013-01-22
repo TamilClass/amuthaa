@@ -44,7 +44,7 @@ class TamilLetter:
 
     AYTHAM = u'ஃ'
 
-    CONSONANTS = {
+    CONSONANT_TYPES = {
                   'VALLINAM': (u'க்', u'ச்', u'ட்', u'த்', u'ப்', u'ற்'),
                   'MELLINAM': (u'ங்', u'ஞ்', u'ண்', u'ந்', u'ம்', u'ன்'),
                   'IDAIYINAM': (u'ய்', u'ர்', u'ல்', u'வ்', u'ழ்', u'ள்'),
@@ -55,10 +55,18 @@ class TamilLetter:
                   'GRANTHA': (u'ஜ்', u'ஷ்', u'ஸ்', u'ஹ்')
                   }
 
-    VOWELS = {
+    # construct a tuple of consonants from the sub-iterables of CONSONANT_TYPES
+    CONSONANTS = tuple(consonant for consonant_group in
+                       CONSONANT_TYPES.values()
+                       for consonant in consonant_group)
+
+    VOWEL_TYPES = {
               'KURIL': (u'அ', u'இ', u'உ', u'எ', u'ஒ'),
               'NEDIL': (u'ஆ', u'ஈ', u'ஊ', u'ஏ', u'ஐ', u'ஓ', u'ஔ')
               }
+
+    # construct a tuple of VOWELS from keys of the VOWEL_TO_ENDING_MAP dict
+    VOWELS = tuple(VOWEL_TO_ENDING_MAP.keys())
 
     @staticmethod
     def get_script_name(codepoint=u''):
@@ -147,21 +155,32 @@ class TamilLetter:
         """ Returns a tuple of all the Tamil vowels
 
         Returns a single tuple containing all twelve Tamil vowels:
-        (அ, ஆ, இ, ஈ, உ, ஊ, எ, ஏ, ஐ, ஒ, ஓ, ஔ)
+        (அ, ஆ, இ, ஈ, உ, ஊ, எ, ஏ, ஐ, ஒ, ஓ, ஔ).
+        The vowels are not guaranteed to be in any particular order.
 
         Returns:
             A tuple containing all 12 Tamil vowels
         """
 
         # get keys from VOWEL_TO_ENDING_MAP and convert to tuple
-        return tuple(TamilLetter.VOWEL_TO_ENDING_MAP.keys())
+        return TamilLetter.VOWELS
 
     @staticmethod
     def get_consonants():
-        """ Returns a tuple of all the consonants """
+        """ Returns a tuple of all the Tamil consonants
 
-        # merge all sub-iterables in CONSONANTS into one tuple
-        return  tuple(consonant for consonant_group in TamilLetter.CONSONANTS.values() for consonant in consonant_group)
+        Returns a single tuple containing all eighteen Tamil consonants:
+        க், ச், ட், த், ப், ற், ங், ஞ், ண், ந், ம், ன், ய், ர், ல், வ், ழ், ள்
+        and the four grantha consonants (ஜ், ஷ், ஸ், ஹ்) which occur most
+        often.         The consonants are not guaranteed to be in any
+        particular order.
+
+         Returns:
+            A 22-length tuple containing all 18 Tamil consonants and the
+            4 most commonly-occuring grantha consonants.
+        """
+
+        return TamilLetter.CONSONANTS
 
     @staticmethod
     def get_letter_type(letter=u''):
@@ -241,7 +260,7 @@ class TamilLetter:
 
         # retrieve the vowel component of the letter and check if it's a kuril sound
         _, vowel = TamilLetter.split_combination(letter)
-        return vowel in TamilLetter.VOWELS['KURIL']
+        return vowel in TamilLetter.VOWEL_TYPES['KURIL']
 
 
     @staticmethod
@@ -254,7 +273,7 @@ class TamilLetter:
 
         # retrieve the vowel component of the letter and check if it's a nedil sound
         _, vowel = TamilLetter.split_combination(letter)
-        return vowel in TamilLetter.VOWELS['NEDIL']
+        return vowel in TamilLetter.VOWEL_TYPES['NEDIL']
 
 
     @staticmethod
@@ -274,8 +293,8 @@ class TamilLetter:
         _, vowel = TamilLetter.split_combination(letter)
 
         # retrieve and return the vowel type
-        for vowel_type in TamilLetter.VOWELS:
-            if vowel in TamilLetter.VOWELS[vowel_type]:
+        for vowel_type in TamilLetter.VOWEL_TYPES:
+            if vowel in TamilLetter.VOWEL_TYPES[vowel_type]:
                 return vowel_type
 
         # if we got this far, an unknown error occurred
@@ -297,7 +316,7 @@ class TamilLetter:
 
         # retrieve the consonant component of the letter and check if it's a hard consonant
         consonant, _ = TamilLetter.split_combination(letter)
-        return consonant in TamilLetter.CONSONANTS['VALLINAM']
+        return consonant in TamilLetter.CONSONANT_TYPES['VALLINAM']
 
     @staticmethod
     def is_mellinam(letter=u''):
@@ -313,7 +332,7 @@ class TamilLetter:
 
         # retrieve the consonant component of the letter and check if it's a soft consonant
         consonant, _ = TamilLetter.split_combination(letter)
-        return consonant in TamilLetter.CONSONANTS['MELLINAM']
+        return consonant in TamilLetter.CONSONANT_TYPES['MELLINAM']
 
     @staticmethod
     def is_idaiyinam(letter=u''):
@@ -330,7 +349,7 @@ class TamilLetter:
 
         # retrieve the consonant component of the letter and check if it's a medium consonant
         consonant, _ = TamilLetter.split_combination(letter)
-        return consonant in TamilLetter.CONSONANTS['IDAIYINAM']
+        return consonant in TamilLetter.CONSONANT_TYPES['IDAIYINAM']
 
     @staticmethod
     def is_grantha(letter=u''):
@@ -347,7 +366,7 @@ class TamilLetter:
 
         # retrieve the consonant component of the letter and check if it's a grantha consonant
         consonant, _ = TamilLetter.split_combination(letter)
-        return consonant in TamilLetter.CONSONANTS['GRANTHA']
+        return consonant in TamilLetter.CONSONANT_TYPES['GRANTHA']
 
 
     @staticmethod
@@ -398,8 +417,8 @@ class TamilLetter:
             raise ValueError("Consonant expected, but the letter \'%s\' is a %s" % (letter, TamilLetter.get_letter_type(letter).title()))
 
         # retrieve and return the vowel type
-        for consonant_type in TamilLetter.CONSONANTS:
-            if letter in TamilLetter.CONSONANTS[consonant_type]:
+        for consonant_type in TamilLetter.CONSONANT_TYPES:
+            if letter in TamilLetter.CONSONANT_TYPES[consonant_type]:
                 return consonant_type
 
         # if we got this far, an unknown error occurred
