@@ -327,8 +327,22 @@ class TamilLetter:
 
     @staticmethod
     def is_kuril(letter=u''):
-        """
-        A character is 'kuril' if it is a vowel or combination with a short sound.
+        """ Returns whether given Tamil unicode grapheme is a kuril letter
+
+        Return whether the given input is a Tamil kuril vowel or combination.
+        A character is a kuril vowel (or a kuril combination if its vowel
+        portion) is one of the five short vowels: அ, இ, உ, எ, ஒ
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            True: If input is a valid Tamil kuril vowel or combination
+            False: input is valid Tamil unicode grapheme but not kuril letter
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
