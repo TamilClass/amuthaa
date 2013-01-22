@@ -144,7 +144,14 @@ class TamilLetter:
 
     @staticmethod
     def get_vowels():
-        """ Returns a tuple of all the vowels """
+        """ Returns a tuple of all the Tamil vowels
+
+        Returns a single tuple containing all twelve Tamil vowels:
+        (அ, ஆ, இ, ஈ, உ, ஊ, எ, ஏ, ஐ, ஒ, ஓ, ஔ)
+
+        Returns:
+            A tuple containing all 12 Tamil vowels
+        """
 
         # get keys from VOWEL_TO_ENDING_MAP and convert to tuple
         return tuple(TamilLetter.VOWEL_TO_ENDING_MAP.keys())
