@@ -338,7 +338,7 @@ class TamilLetter:
 
         Returns:
             True: If input is a valid Tamil kuril vowel or combination
-            False: input is valid Tamil unicode grapheme but not kuril letter
+            False: input is valid Tamil unicode grapheme but not kuril
 
         Raises:
             TypeError: Input was not of type unicode
@@ -354,7 +354,22 @@ class TamilLetter:
 
     @staticmethod
     def is_nedil(letter=u''):
-        """ a character is 'nedil' if it is a vowel or combination with a long sound.
+        """ Returns whether given Tamil unicode grapheme is a nedil letter
+
+        Return whether the given input is a Tamil nedil vowel or combination.
+        A character is a nedil vowel (or a nedil combination if its vowel
+        portion) is one of the seven long vowels: ஆ, ஈ, ஊ, ஏ, ஐ, ஓ, ஔ
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            True: If input is a valid Tamil nedil vowel or combination
+            False: input is valid Tamil unicode grapheme but not nedil
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
