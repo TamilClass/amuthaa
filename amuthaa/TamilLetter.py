@@ -79,7 +79,6 @@ class TamilLetter:
 
         Raises:
             TypeError: A single unicode codepoint was not entered
-
         """
 
         if not codepoint or not isinstance(codepoint, unicode) or \
@@ -91,26 +90,38 @@ class TamilLetter:
         return unicodedata.name(codepoint[0]).split()[0]
 
     @staticmethod
-    def validate_letter(letter=u''):
-        """
-        Ensures that letter is of type unicode, is not equal to an empty string and is a Tamil letter (according to the Unicode consortium).
-        If one of these conditions is not met, an Exception is raised. If all of them are met, True is returned
+    def assert_valid_letter(letter=u''):
+        """ Asserts that the given letter is a valid Tamil unicode grapheme
+
+        Checks that the letter is of type unicode, is not equal to an empty
+        string and is a Tamil letter (according to the Unicode consortium).
+
+        Returns:
+            True: If the letter is a valid Tamil unicode grapheme
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, or non-Tamil grapheme or codepoint
         """
 
         # Check for non-unicode objects
         if not isinstance(letter, unicode):
-            raise TypeError("Must be unicode string. Value \'%s\' of type %s received" % (letter, type(letter)))
+            raise TypeError("""Must be unicode string. Value \'%s\' of type
+                %s received""" % (letter, type(letter)))
 
         # Check for empty strings
         if len(letter) == 0:
-            raise ValueError("Expected a Unicode character. Empty string received.")
+            raise ValueError("Expected Unicode character, not empty string.")
 
         # Check for non-Tamil, non-whitespace characters
         script_language = TamilLetter.get_script_name(letter).title()
-        if  script_language != 'Tamil' and not TamilLetter.is_whitespace(letter):
-            raise ValueError("Expected a Tamil character or whitespace. \'%s\' is from the %s script" % (letter, script_language))
+        if  script_language != 'Tamil' and \
+            not TamilLetter.is_whitespace(letter):
 
-        # TODO: for more than one character
+            raise ValueError("""Expected a Tamil character or whitespace.
+                \'%s\' is from the %s script""" % (letter, script_language))
+
+        # TODO: Make this work if more than one character is entered
 
         # TODO: Allow punctuation and digits
 
@@ -144,7 +155,7 @@ class TamilLetter:
         """ Returns the letter type: Vowel, Consonant or Combination """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         if TamilLetter.is_vowel(letter):
             return 'VOWEL'
@@ -163,7 +174,7 @@ class TamilLetter:
         Checks whether the given letter is the Aytha TamilLetter (ஃ)
         """
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         return letter == TamilLetter.get_aytham()
 
@@ -177,7 +188,7 @@ class TamilLetter:
         2949 (அ) and 2964 (ஔ)
         """
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         return len(letter) == 1 and (ord(u'அ') <= ord(letter) <= ord(u'ஔ'))
 
@@ -188,7 +199,7 @@ class TamilLetter:
         second (and last) character is the pulli (்)
         """
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         return (len(letter) == 2 and (letter[1] == u'்')) and (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ'))
 
@@ -199,7 +210,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # a letter is a combination if it has exactly two characters, the first of which is in the 'அ' column,
         # and the second of which is a combination ending ( ே,  ி, etc.)
@@ -213,7 +224,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # retrieve the vowel component of the letter and check if it's a kuril sound
         _, vowel = TamilLetter.split_combination(letter)
@@ -226,7 +237,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # retrieve the vowel component of the letter and check if it's a nedil sound
         _, vowel = TamilLetter.split_combination(letter)
@@ -240,7 +251,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # ensure that the letter is a vowel or combination
         if not TamilLetter.is_vowel(letter) and not TamilLetter.is_combination(letter):
@@ -265,7 +276,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # if not consonant, it is not a vallinam consonant
         if not TamilLetter.is_consonant(letter):
@@ -282,7 +293,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         if not TamilLetter.is_consonant(letter):
             return False
@@ -298,7 +309,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # if not consonant, it is not an idaiyinam consonant
         if not TamilLetter.is_consonant(letter):
@@ -315,7 +326,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # if not a consonant, it is not a grantha consonant
         if not TamilLetter.is_consonant(letter):
@@ -367,7 +378,7 @@ class TamilLetter:
         """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # ensure that the letter is a vowel
         if not TamilLetter.is_consonant(letter):
@@ -389,8 +400,8 @@ class TamilLetter:
         """
 
         # ensure that the consonant and vowel are valid single Tamil unicode graphemes
-        TamilLetter.validate_letter(consonant)
-        TamilLetter.validate_letter(vowel)
+        TamilLetter.assert_valid_letter(consonant)
+        TamilLetter.assert_valid_letter(vowel)
 
         if not TamilLetter.is_consonant(consonant):
             raise ValueError("Consonant expected. \'%s\' is not a consonant" % consonant)
@@ -415,7 +426,7 @@ class TamilLetter:
         Returns a consonant, vowel tuple when given a combination
         """
         # ensure that the letter is a valid single Tamil unicode grapheme
-        TamilLetter.validate_letter(letter)
+        TamilLetter.assert_valid_letter(letter)
 
         # if consonant, no vowel in the tuple
         if TamilLetter.is_consonant(letter):
@@ -458,7 +469,7 @@ class TamilLetter:
         Returns a dictionary of combinations for a particular vowel, mapped by consonant
         """
         # # Ensure that letter is a valid Tamil unicode character and a vowel
-        TamilLetter.validate_letter(vowel)
+        TamilLetter.assert_valid_letter(vowel)
 
         if not TamilLetter.is_vowel(vowel):
             raise ValueError("Vowel required. \'%s\' is a %s" % (vowel, TamilLetter.get_letter_type(vowel).title()))
@@ -486,7 +497,7 @@ class TamilLetter:
         """
 
         # # Ensure that letter is a valid Tamil unicode character and a consonant
-        TamilLetter.validate_letter(consonant)
+        TamilLetter.assert_valid_letter(consonant)
 
         if not TamilLetter.is_consonant(consonant):
             raise ValueError("Consonant required. \'%s\' is a %s" % (consonant, TamilLetter.get_letter_type(consonant).title()))
