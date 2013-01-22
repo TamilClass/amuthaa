@@ -247,7 +247,7 @@ class TamilLetter:
     def is_vowel(letter=u''):
         """ Returns whether or not a given Tamil unicode grapheme is a vowel
 
-        Return whether the given input is a valid Tamil unicode grapheme.
+        Return whether the given input is a Tamil vowel.
         A character is a vowel if it has a length of one and its codepoint has
         a decimal value between 2949 (அ) and 2964 (ஔ)
 
@@ -270,14 +270,29 @@ class TamilLetter:
 
     @staticmethod
     def is_consonant(letter=u''):
-        """
-        a character is a consonant if it has a length of two and its
-        second (and last) character is the pulli (்)
+        """ Returns whether or not a given Tamil unicode grapheme is a consonant
+
+        Return whether the given input is a Tamil consonant.
+        A character is a consonant if it has a length of two, its first
+        codepoint is a letter from the அ ('a') combination column and its
+        second codepoint is the pulli (்)
+
+        Args:
+            letter: A single Tamil unicode grapheme
+
+        Returns:
+            True: If input is a valid Tamil consonant
+            False: input is a valid Tamil unicode grapheme but not a consonant
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, a non-Tamil grapheme or codepoint
         """
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
 
-        return (len(letter) == 2 and (letter[1] == u'்')) and (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ'))
+        return (len(letter) == 2 and (letter[1] == u'்')) and \
+            (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ'))
 
     @staticmethod
     def is_combination(letter=u''):
@@ -288,10 +303,12 @@ class TamilLetter:
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
 
-        # a letter is a combination if it has exactly two characters, the first of which is in the 'அ' column,
-        # and the second of which is a combination ending ( ே,  ி, etc.)
-        return (ord(u'க') <= ord(letter[0]) <= ord(u'ஹ')) and (len(letter) == 1 or (len(letter) == 2 and letter[1] in TamilLetter.COMBINATION_ENDINGS))
-
+        # a letter is a combination if it has exactly two characters:
+        # a) the first of which is in the 'அ' column, and
+        # b) the second of which is a combination ending ( ே,  ி, etc.)
+        return ((ord(u'க') <= ord(letter[0]) <= ord(u'ஹ')) and
+                len(letter) == 1) or (len(letter) == 2 and letter[1] in \
+                                      TamilLetter.COMBINATION_ENDINGS)
 
     @staticmethod
     def is_kuril(letter=u''):
@@ -302,10 +319,9 @@ class TamilLetter:
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
 
-        # retrieve the vowel component of the letter and check if it's a kuril sound
+        # retrieve vowel component of letter and check if it's a kuril sound
         _, vowel = TamilLetter.split_combination(letter)
         return vowel in TamilLetter.VOWEL_TYPES['KURIL']
-
 
     @staticmethod
     def is_nedil(letter=u''):
@@ -315,10 +331,9 @@ class TamilLetter:
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
 
-        # retrieve the vowel component of the letter and check if it's a nedil sound
+        # retrieve vowel component of letter and check if it's a nedil sound
         _, vowel = TamilLetter.split_combination(letter)
         return vowel in TamilLetter.VOWEL_TYPES['NEDIL']
-
 
     @staticmethod
     def get_vowel_type(letter=u''):
@@ -330,8 +345,12 @@ class TamilLetter:
         TamilLetter.assert_valid_letter(letter)
 
         # ensure that the letter is a vowel or combination
-        if not TamilLetter.is_vowel(letter) and not TamilLetter.is_combination(letter):
-            raise ValueError("Vowel or combination expected, but the letter \'%s\' is a %s" % (letter, TamilLetter.get_letter_type(letter).title()))
+        if (not TamilLetter.is_vowel(letter) and
+            not TamilLetter.is_combination(letter)):
+
+            raise ValueError("""Vowel or combination expected, but \'%s\'
+                is a %s""" % (letter,
+                              TamilLetter.get_letter_type(letter).title()))
 
         # if letter is a combination, split out the vowel part
         _, vowel = TamilLetter.split_combination(letter)
@@ -342,8 +361,8 @@ class TamilLetter:
                 return vowel_type
 
         # if we got this far, an unknown error occurred
-        raise Exception("Unknown error. Letter \'%s\' is coming up as neither kuril nor nedil" % letter)
-
+        raise Exception("""Unknown error. Letter \'%s\' is coming up as
+            neither kuril nor nedil""" % letter)
 
     @staticmethod
     def is_vallinam(letter=u''):
@@ -358,8 +377,10 @@ class TamilLetter:
         if not TamilLetter.is_consonant(letter):
             return False
 
-        # retrieve the consonant component of the letter and check if it's a hard consonant
+        # retrieve consonant component of the letter (ignore vowel component)
         consonant, _ = TamilLetter.split_combination(letter)
+
+        # and check if it's a soft consonant
         return consonant in TamilLetter.CONSONANT_TYPES['VALLINAM']
 
     @staticmethod
@@ -374,8 +395,10 @@ class TamilLetter:
         if not TamilLetter.is_consonant(letter):
             return False
 
-        # retrieve the consonant component of the letter and check if it's a soft consonant
+        # retrieve consonant component of the letter (ignore vowel component)
         consonant, _ = TamilLetter.split_combination(letter)
+
+        # and check if it's a soft consonant
         return consonant in TamilLetter.CONSONANT_TYPES['MELLINAM']
 
     @staticmethod
@@ -391,8 +414,9 @@ class TamilLetter:
         if not TamilLetter.is_consonant(letter):
             return False
 
-        # retrieve the consonant component of the letter and check if it's a medium consonant
+        # retrieve consonant component of the letter
         consonant, _ = TamilLetter.split_combination(letter)
+        # and check if it's a medium consonant
         return consonant in TamilLetter.CONSONANT_TYPES['IDAIYINAM']
 
     @staticmethod
@@ -408,44 +432,45 @@ class TamilLetter:
         if not TamilLetter.is_consonant(letter):
             return False
 
-        # retrieve the consonant component of the letter and check if it's a grantha consonant
+        # retrieve the consonant component of the letter
         consonant, _ = TamilLetter.split_combination(letter)
+        # and check if it's a medium consonant
         return consonant in TamilLetter.CONSONANT_TYPES['GRANTHA']
-
 
     @staticmethod
     def is_whitespace(letter=u''):
         """ Checks whether or not a given letter is whitespace (e.g. a space, tab, etc.) """
 
         # TODO: write test cases for this
-        return len(letter) > 0 and (letter.isspace() or unicodedata.category(letter)[0].upper() == u'Z')
-
+        return len(letter) > 0 and (letter.isspace() or
+                                    unicodedata.category(letter)[0].upper() \
+                                    == u'Z')
 
     @staticmethod
     def is_punctuation(letter=u''):
         """ Checks whether or not a given letter is punctuation """
 
         # TODO: write test cases for this
-        # TODO: string.punctuation contains some symbols, so the condition below will return false positives
-        return letter in string.punctuation or unicodedata.category(letter)[0].upper() in ('P')
 
+        # TODO: string.punctuation contains some symbols, so the condition
+        #        below will return false positives
+        return letter in string.punctuation or unicodedata.category(letter)[0].upper() in ('P')
 
     @staticmethod
     def is_digit(letter=u''):
         """ Checks whether or not a given letter is a digit """
 
         # TODO: write test cases for this
-        return letter.isnumeric() or letter.isdecimal() or unicodedata.category(letter[0]).upper() in ('N')
-
+        return letter.isnumeric() or letter.isdecimal() or \
+                unicodedata.category(letter[0]).upper() in ('N')
 
     @staticmethod
     def is_symbol(letter=u''):
         """ Checks whether or not a given letter is a symbol """
 
         # TODO: write test cases for this
-        # TODO: See if the python string function has anything for handling this
+        # TODO: See if python string function has anything for handling this
         return unicodedata.category(letter)[0].upper() in ('S')
-
 
     @staticmethod
     def get_consonant_type(letter=u''):
@@ -458,7 +483,9 @@ class TamilLetter:
 
         # ensure that the letter is a vowel
         if not TamilLetter.is_consonant(letter):
-            raise ValueError("Consonant expected, but the letter \'%s\' is a %s" % (letter, TamilLetter.get_letter_type(letter).title()))
+            raise ValueError("Consonant expected but \'%s\' is a %s"
+                             % (letter,
+                                TamilLetter.get_letter_type(letter).title()))
 
         # retrieve and return the vowel type
         for consonant_type in TamilLetter.CONSONANT_TYPES:
@@ -466,8 +493,8 @@ class TamilLetter:
                 return consonant_type
 
         # if we got this far, an unknown error occurred
-        raise Exception("Unknown error. Letter \'%s\' is coming up as neither kuril nor nedil" % letter)
-
+        raise Exception("""Unknown error. \'%s\' is coming up as neither
+                        kuril nor nedil""" % letter)
 
     @staticmethod
     def get_combination(consonant=u'', vowel=u''):
@@ -475,12 +502,14 @@ class TamilLetter:
         Returns a combination given a vowel and a consonant
         """
 
-        # ensure that the consonant and vowel are valid single Tamil unicode graphemes
+        # ensure that consonant and vowel are valid
+        # single Tamil unicode graphemes
         TamilLetter.assert_valid_letter(consonant)
         TamilLetter.assert_valid_letter(vowel)
 
         if not TamilLetter.is_consonant(consonant):
-            raise ValueError("Consonant expected. \'%s\' is not a consonant" % consonant)
+            raise ValueError("Consonant expected. \'%s\' is not a consonant"
+                             % consonant)
 
         if not TamilLetter.is_vowel(vowel):
             raise ValueError("Vowel expected. \'%s\' is not a vowel" % (vowel))
@@ -488,13 +517,12 @@ class TamilLetter:
         # store combination initially as an array
         combination = []
 
-        # combination = first part of consonant (i.e. the அ-column, plus the extension)
+        # combination = first part of consonant
+        # (i.e. the அ-column, plus the extension)
         combination.append(consonant[0])
         combination.append(TamilLetter.VOWEL_TO_ENDING_MAP[vowel])
 
         return ''.join(combination)
-
-
 
     @staticmethod
     def split_combination(letter=u''):
@@ -516,7 +544,7 @@ class TamilLetter:
         elif len(letter) == 1 and (ord(u'க') <= ord(letter) <= ord(u'ஹ')):
             return letter + TamilLetter.get_pulli(), u'அ'
 
-        # if non-அ combination, separate the vowel from the extension and return it
+        # if non-அ combination, separate vowel from extension and return it
         elif len(letter) == 2 and TamilLetter.is_combination(letter):
 
             # the consonant is the first part, plus the pulli
@@ -537,7 +565,6 @@ class TamilLetter:
 
         else:
             raise Exception("An unknown exception occurred for letter %s." % letter)
-
 
     @staticmethod
     def get_combination_column(vowel=u''):
@@ -562,9 +589,7 @@ class TamilLetter:
             combination = consonant[0] + TamilLetter.VOWEL_TO_ENDING_MAP[vowel]
             combination_col.update({consonant : combination})
 
-
         return combination_col
-
 
     @staticmethod
     def get_combination_row(consonant=u''):
@@ -577,7 +602,6 @@ class TamilLetter:
 
         if not TamilLetter.is_consonant(consonant):
             raise ValueError("Consonant required. \'%s\' is a %s" % (consonant, TamilLetter.get_letter_type(consonant).title()))
-
 
         # Declare empty dictionary
         combination_row = {}
@@ -592,7 +616,6 @@ class TamilLetter:
 
         return combination_row
 
-
     @staticmethod
     def get_combination_endings():
         """ Returns a tuple of vowel combination endings (ி ,ீ , ே, etc.) """
@@ -601,7 +624,6 @@ class TamilLetter:
 
         # get the list of combination endings, remove the empty unicode string and convert to a tuple
         return tuple(TamilLetter.COMBINATION_ENDINGS)
-
 
     @staticmethod
     def get_pulli():
