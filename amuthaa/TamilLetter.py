@@ -184,7 +184,23 @@ class TamilLetter:
 
     @staticmethod
     def get_letter_type(letter=u''):
-        """ Returns the letter type: Vowel, Consonant or Combination """
+        """ Returns the type of letter: vowel, consonant, combination
+        or aytham
+
+        Given a valid Tamil unicode grapheme, returns a String indicating
+        whether the grapheme is a Tamil vowel, consonant, combination
+        or aytham.
+
+        Args:
+            letter: A valid Tamil unicode grapheme
+
+        Returns:
+            'VOWEL', 'CONSONANT', 'COMBINATION' or 'AYTHAM'
+
+        Raises:
+            TypeError: Input was not of type unicode
+            ValueError: Empty string, or non-Tamil grapheme or codepoint
+        """
 
         # ensure that the letter is a valid single Tamil unicode grapheme
         TamilLetter.assert_valid_letter(letter)
@@ -198,7 +214,8 @@ class TamilLetter:
         elif TamilLetter.is_aytham(letter):
             return 'AYTHAM'
         else:
-            raise Exception("Unknown error. Letter \'%s\' is coming up as neither a vowel, consonant combination, or aytham" % letter)
+            raise Exception("""Unknown error. Letter \'%s\' is coming up as
+                neither a vowel, consonant combination, or aytham""" % letter)
 
     @staticmethod
     def is_aytham(letter=u''):
