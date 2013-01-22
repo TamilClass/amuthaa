@@ -129,10 +129,16 @@ class TamilLetter:
         return True
 
     # # Getter methods for aytham, vowels, consonants and combinations
-
     @staticmethod
     def get_aytham():
-        """ Returns a single unicode letter - aytham """
+        """ Returns Aytham (ஃ)
+
+        Returns a single unicode codepoint - the Aytham - a Tamil letter
+        that is neither a vowel, a consonant, or a combination.
+
+        Returns:
+            u'ஃ' - the Tamil letter 'aytham'
+        """
 
         return TamilLetter.AYTHAM
 
