@@ -116,9 +116,11 @@ class TamilNoun(TamilWord):
 
         direct_object = TamilNoun(self.word)
 
+        # direct objects use the suffix 'ஐ'
         suffix = u"ஐ"
 
-        ENDING_BY_CLASS = {1: u"த்த்",
+        # map noun class to its particular connector
+        CONNECTOR_BY_CLASS = {1: u"த்த்",
                            2: self.word[-1],
                            3: self.word[-1],
                            4: u"ய்",
@@ -130,64 +132,36 @@ class TamilNoun(TamilWord):
                   }
 
         noun_class = TamilNoun.get_class(self.word)
-        ending = TamilWord(ENDING_BY_CLASS[noun_class])
 
-        if noun_class == 1:
+        if noun_class not in CONNECTOR_BY_CLASS.keys():
+            raise ValueError("""%s is an invalid noun class for word %s.
+                Must be between 1 and 9""" % (noun_class, self.word))
+
+        connector = TamilWord(CONNECTOR_BY_CLASS.get(noun_class))
+
+        # remove last letter + add two-letter connector + suffix
+        if noun_class in (1, 7, 8):
+
+            del direct_object[-1]
+
+            direct_object.word += (connector[0] +
+                 TamilLetter.get_combination(connector[-1], suffix))
+
+        # remove last letter + add one-letter connector + suffix
+        elif noun_class in (3, 9):
 
             del direct_object[-1]
 
             direct_object.word += \
-                (ending[0] + TamilLetter.get_combination(ending[-1], suffix))
+                (TamilLetter.get_combination(connector[0], suffix))
 
-        elif noun_class == 2:
-
-            direct_object.word += \
-                (TamilLetter.get_combination(ending[0], suffix))
-
-        elif noun_class == 3:
-
-            del direct_object[-1]
+        # nothing to remove; just add connector + suffix
+        elif noun_class in (2, 4, 5, 6):
 
             direct_object.word += \
-                (TamilLetter.get_combination(ending[0], suffix))
+                (TamilLetter.get_combination(connector[0], suffix))
 
-        elif noun_class == 4:
-
-            direct_object.word += \
-                (TamilLetter.get_combination(ending[0], suffix))
-
-        elif noun_class == 5:
-
-            direct_object.word += \
-                (TamilLetter.get_combination(ending[0], suffix))
-
-        elif noun_class == 6:
-
-            direct_object.word += \
-                (TamilLetter.get_combination(ending[0], suffix))
-
-        elif noun_class == 7:
-
-            del direct_object[-1]
-
-            direct_object.word += \
-                (ending[0] + TamilLetter.get_combination(ending[-1], suffix))
-
-        elif noun_class == 8:
-
-            del direct_object[-1]
-
-            direct_object.word += \
-                (ending[0] + TamilLetter.get_combination(ending[-1], suffix))
-
-        elif noun_class == 9:
-
-            del direct_object[-1]
-
-            direct_object.word += \
-                (TamilLetter.get_combination(ending[-1], suffix))
-
-
+        return direct_object.word
 
     @staticmethod
     def add_suffix(suffix=u''):
