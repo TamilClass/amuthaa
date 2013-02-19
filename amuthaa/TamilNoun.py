@@ -95,7 +95,7 @@ class TamilNoun(TamilWord):
             elif ending_vowel in (u'ஆ', u'ஏ', u'ஊ', u'ஓ'):
                 return 5
 
-            elif len(word) == 2 and TamilLetter.is_kuril(TamilWord[0]):
+            elif len(word) == 2 and TamilLetter.is_kuril(word[0]):
                 return 6
 
             elif word[-1] == u'று' and not TamilLetter.is_consonant(word[-2]):
