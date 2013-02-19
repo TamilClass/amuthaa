@@ -121,14 +121,14 @@ class TamilNoun(TamilWord):
 
         # map noun class to its particular connector
         CONNECTOR_BY_CLASS = {1: u"த்த்",
-                           2: self.word[-1],
-                           3: self.word[-1],
+                           2: direct_object[-1],
+                           3: direct_object[-1],
                            4: u"ய்",
                            5: u"வ்",
                            6: u"வ்",
-                           7: u"ட்ட்",
-                           8: u"ற்ற்",
-                           9: TamilLetter.get_combination(self.word[-1])[0]
+                           7: u"ற்ற்",
+                           8: u"ட்ட்",
+                           9: TamilLetter.split_combination(direct_object[-1])[0]
                   }
 
         noun_class = TamilNoun.get_class(self.word)
