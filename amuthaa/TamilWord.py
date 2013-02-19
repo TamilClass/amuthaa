@@ -27,17 +27,23 @@ class TamilWord(object):
     def __getitem__(self, index):
         """ Read the letter at the given position in the letters list """
 
-        self.letters[index]
+        return self._letters[index]
 
     def __setitem__(self, index, value):
         """ Modify a member at the given position in the letters list """
 
-        self.letters[index] = value
+        self._letters[index] = value
+
+        # re-calculate word and syllables
+        self.word = ''.join(self._letters)
 
     def __delitem__(self, index):
         """ Delete the letter at the given position in the letters list """
 
-        del self.letters[index]
+        del self._letters[index]
+
+        # re-calculate word and syllables
+        self.word = ''.join(self._letters)
 
     def __len__(self):
         """ Overload length operator. Returns length of the 'letters' list """
@@ -94,12 +100,12 @@ class TamilWord(object):
             self._word = word
 
             self._letters = self.split_letters(word)
-            self._syllables = self.split_syllables(self._letters)
-            # TODO: calculate syllables
+            #self._syllables = self.split_syllables(self._letters)
+            # TODO: Fix split_syllables. It is not working at the moment
 
         # if invalid word is entered, initialize to empty string
         else:
-            self.word = u''
+            self._word = u''
 
     @property
     def syllables(self):
