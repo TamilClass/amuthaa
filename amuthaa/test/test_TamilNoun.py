@@ -56,6 +56,41 @@ class TamilNounTest(unittest.TestCase):
 
             print("pass")
 
+    def test_split_letters(self):
+        """ Tests the split_letters() method of the TamilNoun class
+
+        Loops through words in Excel spreadsheet and ensures that the
+        split_letters() method returns the expected list of letters_str
+        for each noun in the Excel file
+        """
+
+        # Load excel workbook and sheet
+        filename = "TamilNounsByClass.xls"
+
+        wb = xlrd.open_workbook(filename)
+        sh = wb.sheet_by_index(0)
+
+        for rownum in range(1, sh.nrows):
+
+            row = sh.row_values(rownum)
+
+            noun = row[0]
+
+            letters_str = row[3]
+            letters_str = letters_str.replace(" ", "")
+            expected_letters = letters_str.split(",")
+            received_letters = TamilNoun.split_letters(noun)
+
+            print("Testing %s. Expecting letters %s..."
+                  % (noun, letters_str)),
+
+            self.assertEquals(expected_letters, received_letters,
+                              """For noun %s expected %s.
+                              Received %s."""
+                              % (noun, expected_letters, received_letters))
+
+            print("pass")
+
 
 def suite():
     suite = unittest.TestSuite()
