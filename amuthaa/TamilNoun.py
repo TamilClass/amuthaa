@@ -38,7 +38,10 @@ SUFFIX = {
 
 class TamilNoun(TamilWord):
 
-    def __init__(self, text=u''):
+    def __init__(self, word=u''):
+
+        TamilWord.__init__(self, word)
+
         self._noun_class = None
 
     @staticmethod
@@ -106,6 +109,59 @@ class TamilNoun(TamilWord):
 
             else:
                 return 9
+
+    @property
+    def direct_object(self):
+        """Returns the direct object of a given noun."""
+
+        direct_object = TamilNoun(self.word)
+
+        # direct objects use the suffix 'ஐ'
+        suffix = u"ஐ"
+
+        # map noun class to its particular connector
+        CONNECTOR_BY_CLASS = {1: u"த்த்",
+                           2: direct_object[-1],
+                           3: direct_object[-1],
+                           4: u"ய்",
+                           5: u"வ்",
+                           6: u"வ்",
+                           7: u"ற்ற்",
+                           8: u"ட்ட்",
+                           9: TamilLetter.split_combination(direct_object[-1])[0]
+                  }
+
+        noun_class = TamilNoun.get_class(self.word)
+
+        if noun_class not in CONNECTOR_BY_CLASS.keys():
+            raise ValueError("""%s is an invalid noun class for word %s.
+                Must be between 1 and 9""" % (noun_class, self.word))
+
+        connector = TamilWord(CONNECTOR_BY_CLASS.get(noun_class))
+
+        # remove last letter + add two-letter connector + suffix
+        if noun_class in (1, 7, 8):
+
+            del direct_object[-1]
+
+            direct_object.word += (connector[0] +
+                 TamilLetter.get_combination(connector[-1], suffix))
+
+        # remove last letter + add one-letter connector + suffix
+        elif noun_class in (3, 9):
+
+            del direct_object[-1]
+
+            direct_object.word += \
+                (TamilLetter.get_combination(connector[0], suffix))
+
+        # nothing to remove; just add connector + suffix
+        elif noun_class in (2, 4, 5, 6):
+
+            direct_object.word += \
+                (TamilLetter.get_combination(connector[0], suffix))
+
+        return direct_object.word
 
     @staticmethod
     def add_suffix(suffix=u''):
