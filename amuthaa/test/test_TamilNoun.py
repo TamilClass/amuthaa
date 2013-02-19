@@ -91,39 +91,39 @@ class TamilNounTest(unittest.TestCase):
 
             print("pass")
 
-        def test_direct_object(self):
-            """ Tests the direct_object property's getter method of the
-            TamilNoun class.
+    def test_direct_object(self):
+        """ Tests the direct_object property's getter method of the
+        TamilNoun class.
 
-            Loops through words in Excel spreadsheet and ensures that the
-            method returns the expected direct object for each noun in
-            the Excel file
-            """
+        Loops through words in Excel spreadsheet and ensures that the
+        method returns the expected direct object for each noun in
+        the Excel file
+        """
 
-            # Load excel workbook and sheet
-            filename = "TamilNounsByClass.xls"
+        # Load excel workbook and sheet
+        filename = "TamilNounsByClass.xls"
 
-            wb = xlrd.open_workbook(filename)
-            sh = wb.sheet_by_index(0)
+        wb = xlrd.open_workbook(filename)
+        sh = wb.sheet_by_index(0)
 
-            for rownum in range(1, sh.nrows):
+        for rownum in range(1, sh.nrows):
 
-                row = sh.row_values(rownum)
+            row = sh.row_values(rownum)
 
-                noun = TamilNoun(row[0])
+            noun = TamilNoun(row[0])
 
-                expected = row[2]
-                received = noun.direct_object
+            expected = row[2]
+            received = noun.direct_object
 
-                print("Testing %s. Expecting %s..."
-                      % (noun.word, expected)),
+            print("Testing %s. Expecting %s..."
+                  % (noun.word, expected)),
 
-                self.assertEquals(expected, received,
-                                  """For noun %s expected %s.
-                                  Received %s."""
-                                  % (noun.word, expected, received))
+            self.assertEquals(expected, received,
+                              """For noun %s expected %s.
+                              Received %s."""
+                              % (noun.word, expected, received))
 
-                print("pass")
+            print("pass")
 
 
 def suite():
