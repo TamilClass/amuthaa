@@ -38,7 +38,10 @@ SUFFIX = {
 
 class TamilNoun(TamilWord):
 
-    def __init__(self, text=u''):
+    def __init__(self, word=u''):
+
+        TamilWord.__init__(self, word)
+
         self._noun_class = None
 
     @staticmethod
@@ -106,6 +109,11 @@ class TamilNoun(TamilWord):
 
             else:
                 return 9
+
+    @property
+    def direct_object(self):
+        """Returns the direct object of a given noun."""
+        pass
 
     @staticmethod
     def add_suffix(suffix=u''):
