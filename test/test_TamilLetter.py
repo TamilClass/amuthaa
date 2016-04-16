@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
+# import amuthaa directory from ..
+
+import sys
+sys.path.append("..")
+sys.path
+
 
 import unittest
 import logging
@@ -1437,7 +1443,7 @@ class TamilLetterTest(unittest.TestCase):
 
 
 
-def suite():
+'''def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TamilLetterTest))
     return suite
@@ -1445,8 +1451,8 @@ def suite():
 def main():
     runner = unittest.TextTestResult()
     test_suite = suite()
-    runner.run(test_suite)
+    runner.run(test_suite) '''
 
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
