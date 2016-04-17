@@ -10,12 +10,12 @@ from amuthaa import TamilLetter
 class TamilWord(object):
     """ Module to handle the processing of Tamil words """
 
-    def __init__(self, word=u''):
+    def __init__(self, word=''):
         """ Constructor for TamilWord class. Takes a unicode string
         composed of Tamil characters as an optional input.
         """
 
-        self._word = u''
+        self._word = ''
         self._syllables = []
         self._letters = []
 
@@ -60,12 +60,12 @@ class TamilWord(object):
         """ Overload the + operator by appending the word string in the other
         object to the end of the self object """
 
-        other_word = u''
+        other_word = ''
 
         if isinstance(other, TamilWord):
             other_word = other.word
 
-        elif isinstance(str(other), string) or isinstance(other, unicode):
+        elif isinstance(str(other), string) or isinstance(other, str):
             other_word = other
 
         else:
@@ -77,12 +77,12 @@ class TamilWord(object):
     def __iadd__(self, other):
         """ Overload the += operator """
 
-        other_word = u''
+        other_word = ''
 
         if isinstance(other, TamilWord):
             other_word = other.word
 
-        elif isinstance(str(other), string) or isinstance(other, unicode):
+        elif isinstance(str(other), string) or isinstance(other, str):
             other_word = other
 
         self.word += other_word
@@ -105,7 +105,7 @@ class TamilWord(object):
 
         # if invalid word is entered, initialize to empty string
         else:
-            self._word = u''
+            self._word = ''
 
     @property
     def syllables(self):
@@ -119,7 +119,7 @@ class TamilWord(object):
 
         return self._letters
 
-    def add_ending(self, ending=u''):
+    def add_ending(self, ending=''):
         """ Add an ending to the word, combining vowel-consonant
         pairs if necessary """
 
@@ -145,7 +145,7 @@ class TamilWord(object):
         self.word += ending
 
     @staticmethod
-    def validate(word=u''):
+    def validate(word=''):
         """ Asserts that a given word is valid """
 
         # if input was a TamilWord object, extract out the word portion
@@ -163,7 +163,7 @@ class TamilWord(object):
         return True
 
     @staticmethod
-    def split_letters(word=u''):
+    def split_letters(word=''):
         """ Returns the graphemes (i.e. the Tamil characters)
         in a given word as a list """
 
@@ -175,7 +175,7 @@ class TamilWord(object):
 
         # a tuple of all combination endings and of all அ combinations
         combination_endings = TamilLetter.get_combination_endings()
-        a_combinations = TamilLetter.get_combination_column(u'அ').values()
+        a_combinations = list(TamilLetter.get_combination_column('அ').values())
 
         # loop through
         for codepoint in word:
@@ -216,15 +216,15 @@ class TamilWord(object):
         return letters
 
     @staticmethod
-    def print_letters(word=u'', delimiter="-"):
+    def print_letters(word='', delimiter="-"):
         """ Prints all the graphemes in a word, separated by a
         delimiter (default: "-") """
 
         for letter in TamilWord.get_letters(word):
-            print letter, delimiter,
+            print(letter, delimiter, end=' ')
 
         # go to new line
-        print
+        print()
 
     @staticmethod
     def split_syllables(letters=[]):
