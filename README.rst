@@ -8,7 +8,7 @@ Here is a sampling of the TamilLetter class::
 	
 	>>> from amuthaa import TamilLetter
 	>>> 
-	>>> letter = u'ம'
+	>>> letter = 'ம'
 	>>> 
 	>>> TamilLetter.is_aytham(letter)
 	False
@@ -20,9 +20,9 @@ Here is a sampling of the TamilLetter class::
 	True
 	>>> 
 	>>> consonant, vowel = TamilLetter.split_combination(letter)
-	>>> print consonant
+	>>> print (consonant)
 	ம்
-	>>> print vowel
+	>>> print (vowel)
 	அ
 	>>> 
 	>>> TamilLetter.is_consonant(consonant)
@@ -30,14 +30,14 @@ Here is a sampling of the TamilLetter class::
 	>>> TamilLetter.is_vowel(vowel)
 	True
 	>>> 
-	>>> print TamilLetter.get_combination(u'க்', u'ஐ')
+	>>> print TamilLetter.get_combination('க்', 'ஐ')
 	கை
 	>>> 
 	>>> 
 	>>> vowels = TamilLetter.get_vowels()
 	>>> 
 	>>> for v in vowels:
-	...     print v, TamilLetter.get_vowel_type(v)
+	...     print (v, TamilLetter.get_vowel_type(v))
 	... 
 	அ KURIL
 	இ KURIL
@@ -55,7 +55,7 @@ Here is a sampling of the TamilLetter class::
 	>>> consonants = TamilLetter.get_consonants()    
 	>>>  
 	... for c in consonants:
-	...     print c, TamilLetter.get_consonant_type(c)
+	...     print (c, TamilLetter.get_consonant_type(c))
 	... 
 	ய் IDAIYINAM
 	ர் IDAIYINAM
@@ -91,7 +91,7 @@ Here is a sampling of the TamilLetter class::
 	...                    ]
 	>>> 
 	>>> for f in foreign_letters:
-	...     print "The letter %s is in the %s script" %(f, TamilLetter.get_script_name(f))
+	...     print ("The letter %s is in the %s script" %(f, TamilLetter.get_script_name(f)))
 	... 
 	The letter ഢ is in the MALAYALAM script
 	The letter ම is in the SINHALA script

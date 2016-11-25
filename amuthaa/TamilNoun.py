@@ -1,44 +1,44 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-from TamilLetter import TamilLetter
-from TamilWord import TamilWord
+from .TamilLetter import TamilLetter
+from .TamilWord import TamilWord
 
 # Suffix dictionary: maps suffix to வேற்றுமை type
 SUFFIX = {
-            u'ஐ': 1,
-            u'ஆல்': 2,
-            u'ஓடு': 2,
-            u'உடன்': 2,
-            u'கு': 4,
-            u'இல்': 5,
-            u'இன்': 5,
-            u'ஐ விட': 5,
+            'ஐ': 1,
+            'ஆல்': 2,
+            'ஓடு': 2,
+            'உடன்': 2,
+            'கு': 4,
+            'இல்': 5,
+            'இன்': 5,
+            'ஐ விட': 5,
             # u' இனின்று': 5,  - commented this out. Never heard of it
-            u'இலிருந்து': 5,
-            u'அது': 6,
-            u'ஆது': 6,
-            u'அ': 6,
-            u'உடைய': 6,
-            u'இனுடைய': 6,
-            u'இல்': 7,
-            u'இடத்தில்': 7,
-            u'மேல்': 7,
-            u'இன்மேல்': 7,
-            u'கீழ்': 7,
-            u'இன்கீழ்': 7,
-            u'உள்': 7,
-            u'கு உள்': 7,
-            u'உம்': 0,
-            u'ஆ': 0,
-            u'ஏ': 0,
-            u'ஓ': 0
+            'இலிருந்து': 5,
+            'அது': 6,
+            'ஆது': 6,
+            'அ': 6,
+            'உடைய': 6,
+            'இனுடைய': 6,
+            'இல்': 7,
+            'இடத்தில்': 7,
+            'மேல்': 7,
+            'இன்மேல்': 7,
+            'கீழ்': 7,
+            'இன்கீழ்': 7,
+            'உள்': 7,
+            'கு உள்': 7,
+            'உம்': 0,
+            'ஆ': 0,
+            'ஏ': 0,
+            'ஓ': 0
             }
 
 
 class TamilNoun(TamilWord):
 
-    def __init__(self, word=u''):
+    def __init__(self, word=''):
 
         TamilWord.__init__(self, word)
 
@@ -51,7 +51,7 @@ class TamilNoun(TamilWord):
         #TODO: implement method
 
     @staticmethod
-    def get_class(word=u''):
+    def get_class(word=''):
         """ Returns the noun class for a given noun """
 
         ### See flowchart (docs/material/sendhil/noun_classes.png) for details
@@ -67,10 +67,10 @@ class TamilNoun(TamilWord):
 
         if TamilLetter.is_consonant(word[-1]):
 
-            if word[-1] == u'ம்':
+            if word[-1] == 'ம்':
                 return 1
 
-            elif (word[-1] in (u'ல்', u'ன்', u'ய்', u'ள்', u'ண்') and
+            elif (word[-1] in ('ல்', 'ன்', 'ய்', 'ள்', 'ண்') and
                 len(word) == 2 and TamilLetter.is_kuril(word[0])):
                 return 2
 
@@ -92,19 +92,19 @@ class TamilNoun(TamilWord):
 
             _, ending_vowel = TamilLetter.split_combination(word[-1])
 
-            if ending_vowel in (u'இ', u'ஈ', u'ஐ'):
+            if ending_vowel in ('இ', 'ஈ', 'ஐ'):
                 return 4
 
-            elif ending_vowel in (u'ஆ', u'ஏ', u'ஊ', u'ஓ'):
+            elif ending_vowel in ('ஆ', 'ஏ', 'ஊ', 'ஓ'):
                 return 5
 
             elif len(word) == 2 and TamilLetter.is_kuril(word[0]):
                 return 6
 
-            elif word[-1] == u'று' and not TamilLetter.is_consonant(word[-2]):
+            elif word[-1] == 'று' and not TamilLetter.is_consonant(word[-2]):
                 return 7
 
-            elif word[-1] == u'டு' and not TamilLetter.is_consonant(word[-2]):
+            elif word[-1] == 'டு' and not TamilLetter.is_consonant(word[-2]):
                 return 8
 
             else:
@@ -117,23 +117,23 @@ class TamilNoun(TamilWord):
         direct_object = TamilNoun(self.word)
 
         # direct objects use the suffix 'ஐ'
-        suffix = u"ஐ"
+        suffix = "ஐ"
 
         # map noun class to its particular connector
-        CONNECTOR_BY_CLASS = {1: u"த்த்",
+        CONNECTOR_BY_CLASS = {1: "த்த்",
                            2: direct_object[-1],
                            3: direct_object[-1],
-                           4: u"ய்",
-                           5: u"வ்",
-                           6: u"வ்",
-                           7: u"ற்ற்",
-                           8: u"ட்ட்",
+                           4: "ய்",
+                           5: "வ்",
+                           6: "வ்",
+                           7: "ற்ற்",
+                           8: "ட்ட்",
                            9: TamilLetter.split_combination(direct_object[-1])[0]
                   }
 
         noun_class = TamilNoun.get_class(self.word)
 
-        if noun_class not in CONNECTOR_BY_CLASS.keys():
+        if noun_class not in list(CONNECTOR_BY_CLASS.keys()):
             raise ValueError("""%s is an invalid noun class for word %s.
                 Must be between 1 and 9""" % (noun_class, self.word))
 
@@ -164,13 +164,13 @@ class TamilNoun(TamilWord):
         return direct_object.word
 
     @staticmethod
-    def add_suffix(suffix=u''):
+    def add_suffix(suffix=''):
         """ docstring """
         pass
         #TODO: Implement method
 
     @staticmethod
-    def get_plural(word=u''):
+    def get_plural(word=''):
         """ docstring """
 
         #TODO: Implement method

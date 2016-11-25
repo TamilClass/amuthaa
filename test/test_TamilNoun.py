@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
+# import amuthaa directory from ..
+
+import sys
+sys.path.append("..")
+sys.path
 
 import unittest
 import logging
@@ -46,10 +51,10 @@ class TamilNounTest(unittest.TestCase):
             expected_class = int(row[1])
             received_class = int(TamilNoun.get_class(noun))
 
-            print("Testing %s. Expecting class %s..."
-                  % (noun, expected_class)),
+            print(("Testing %s. Expecting class %s..."
+                  % (noun, expected_class)), end=' ')
 
-            self.assertEquals(expected_class, received_class,
+            self.assertEqual(expected_class, received_class,
                               """For noun %s expected noun class %s.
                               Received noun class %s."""
                               % (noun, expected_class, received_class))
@@ -81,10 +86,10 @@ class TamilNounTest(unittest.TestCase):
             expected_letters = letters_str.split(",")
             received_letters = TamilNoun.split_letters(noun)
 
-            print("Testing %s. Expecting letters %s..."
-                  % (noun, letters_str)),
+            print(("Testing %s. Expecting letters %s..."
+                  % (noun, letters_str)), end=' ')
 
-            self.assertEquals(expected_letters, received_letters,
+            self.assertEqual(expected_letters, received_letters,
                               """For noun %s expected %s.
                               Received %s."""
                               % (noun, expected_letters, received_letters))
@@ -115,10 +120,10 @@ class TamilNounTest(unittest.TestCase):
             expected = row[2]
             received = noun.direct_object
 
-            print("Testing %s. Expecting %s..."
-                  % (noun.word, expected)),
+            print(("Testing %s. Expecting %s..."
+                  % (noun.word, expected)), end=' ')
 
-            self.assertEquals(expected, received,
+            self.assertEqual(expected, received,
                               """For noun %s expected %s.
                               Received %s."""
                               % (noun.word, expected, received))
@@ -126,7 +131,7 @@ class TamilNounTest(unittest.TestCase):
             print("pass")
 
 
-def suite():
+'''def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TamilNounTest))
     return suite
@@ -135,8 +140,8 @@ def suite():
 def main():
     runner = unittest.TextTestResult()
     test_suite = suite()
-    runner.run(test_suite)
+    runner.run(test_suite)  ''' 
 
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
